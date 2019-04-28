@@ -10,6 +10,7 @@ const users = require("./routes/users");
 
 // passport config
 require("./config/passport")(passport);
+
 // db config
 //const db = require("./config/keys").MongoURI;
 
