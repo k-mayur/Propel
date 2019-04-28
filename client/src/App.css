@@ -1,0 +1,7 @@
+.wrap {
+  display: flex;
+  height: 100vw;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
