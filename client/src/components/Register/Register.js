@@ -92,7 +92,7 @@ class Register extends React.Component {
                 <input
                   onChange={this.onChange}
                   value={this.state.userType}
-                  error={errors.name}
+                  error={errors.userType}
                   id="userType"
                   type="text"
                   className={classnames("", {
