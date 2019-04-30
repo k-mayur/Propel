@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.10.6.76:4000",
   "dependencies": {
     "@babel/core": "7.4.3",
     "@material-ui/icons": "^3.0.2",

@@ -9,10 +9,11 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_USER:
+    let target = Object.assign({},action.payload)
       return {
         ...state,
+        user:target,
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
       };
     case USER_LOADING:
       return {

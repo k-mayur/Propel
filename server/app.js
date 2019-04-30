@@ -18,15 +18,18 @@ const db = require("./config/keys").MongoURI;
 
 // connect to mongoose
 mongoose
+<<<<<<< HEAD
+  .connect(db, {useNewUrlParser: true})
+=======
   .connect(db, {
     useNewUrlParser: true
   })
+>>>>>>> dev
   .then(() => console.log("MongoDb connected"))
   .catch(err => console.log(err));
 
 //cors middleware
 app.use(cors());
-
 // body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
