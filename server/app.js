@@ -17,7 +17,7 @@ require("./config/passport")(passport);
 // connect to mongoose
 mongoose
   .connect("mongodb://localhost/propel", {
-    useNewUrlParser: true
+    useNewUrlParser: true,
   })
   .then(() => console.log("MongoDb connected"))
   .catch(err => console.log(err));
