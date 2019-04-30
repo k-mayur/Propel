@@ -60,7 +60,8 @@ router.put(
         task: task.task,
         dueDate: task.dueDate,
         status: "NYS",
-        assignedBy: req.body.mentorId
+        assignedBy: req.body.mentorId,
+        id: mongoose.Types.ObjectId()
       };
       User.findOne({ _id: req.body.traineeId }).then(trainee => {
         const newTasks = trainee.tasks.concat(newTask);
@@ -84,7 +85,19 @@ router.put(
     User.findOne({
       _id: req.body.traineeId
     }).then(user => {
-      user.tasks[req.body.index].status = req.body.status;
+      const newTasks = Object.assign([], user.tasks);
+      const updatedTasks = newTasks.map(task => {
+        if (task !== null) {
+          if (task.id == req.body.taskId) {
+            task.status = req.body.status;
+          }
+          return task;
+        } else {
+          return;
+        }
+      });
+      user.tasks = updatedTasks;
+      console.log(user.tasks);
       user
         .save()
         .then(user => {
@@ -102,7 +115,19 @@ router.put(
   (req, res) => {
     User.findOne({ _id: req.body.traineeId }).then(user => {
       //delete task logic
-
+      const newTasks = Object.assign([], user.tasks);
+      const updatedTasks = newTasks.map(task => {
+        if (task !== null) {
+          if (task.id == req.body.taskId) {
+            return;
+          } else {
+            return task;
+          }
+        } else {
+          return;
+        }
+      });
+      user.tasks = updatedTasks;
       user
         .save()
         .then(() => {
