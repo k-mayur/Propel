@@ -5,6 +5,8 @@ import App from "./App";
 import thunk from "redux-thunk";
 import errorReducer from "./store/reducers/errorReducers";
 import loginReducer from "./store/reducers/login";
+import taskReducer from "./store/reducers/task";
+import visibilityFilter from "./store/reducers/visibility";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -14,7 +16,9 @@ import * as serviceWorker from "./serviceWorker";
 
 const rootReducer = combineReducers({
   login: loginReducer,
-  error: errorReducer
+  error: errorReducer,
+  task: taskReducer,
+  visibility: visibilityFilter,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
