@@ -65,6 +65,7 @@ class Header extends React.Component {
                 PropelMeAhead
               </a>
             </Typography>
+            <div>{this.props.auth.user.name}</div>
             {auth && (
               <div>
                 <IconButton
@@ -109,7 +110,7 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.login
+  auth: state.login,
 });
 export default connect(
   mapStateToProps,

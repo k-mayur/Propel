@@ -22,7 +22,6 @@ mongoose
 
 //cors middleware
 app.use(cors());
-
 // body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Draggable from '../draggable/index'
 import Droppable from '../droppable/index'
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
-// width:100%;
+width:100%;
 padding:32px;
 display:flex;
 justify-content:center;
@@ -18,33 +19,50 @@ const Item = styled.div`
 ;`
 
 const droppableStyle = {
-    backgroundColor:'#555',
-    minWidth:'250px',
-    height:'400px',
-    margin:'32px',
+    backgroundColor: '#555',
+    minWidth: '250px',
+    height: '400px',
+    margin: '32px',
 }
 class DndTest extends Component {
+    populateTasks = (tasks,status) => {
+        let filteredData = tasks.reduce((acc,ele,index) => {
+            if(ele.status===status){
+                ele.id=index.toString();
+                acc.push(ele);
+            }
+            return acc;
+        },[]);
+        return (
+            <div>{filteredData.map((ele) =>
+                <Draggable id={ele.id} key={ele.id} style={{ margin: '8px' }}><Item>{ele.task}</Item></Draggable>)}
+            </div>
+        )
+    }
     render() {
+        let tasks = this.props.user.tasks;
         return (
             <Wrapper>
-                <Droppable id='dr1' style={droppableStyle}>
+                <Droppable id='NYS' style={droppableStyle}>
                     <h4>todo</h4>
-                    <Draggable id='item1' style={{ margin: '8px' }}><Item>some</Item></Draggable>
-                    <Draggable id='item2' style={{ margin: '8px' }}><Item>asd</Item></Draggable>
+                    {this.populateTasks(tasks,'NYS')}
                 </Droppable>
-                <Droppable id='dr2' style={droppableStyle}>
+                <Droppable id='CWO' style={droppableStyle}>
                     <h4>working</h4>
-                    <Draggable id='item3' style={{ margin: '8px' }}><Item>ggg</Item></Draggable>
-                    <Draggable id='item4' style={{ margin: '8px' }}><Item>eee</Item></Draggable>
+                    {this.populateTasks(tasks,'CWO')}
                 </Droppable>
-                <Droppable id='dr3' style={droppableStyle}>
+                <Droppable id='COM' style={droppableStyle}>
                     <h4>done</h4>
-                    <Draggable id='item5' style={{ margin: '8px' }}><Item>poi</Item></Draggable>
-                    <Draggable id='item6' style={{ margin: '8px' }}><Item>toi</Item></Draggable>
+                    {this.populateTasks(tasks,'COM')}
                 </Droppable>
             </Wrapper>
         )
     }
 }
 
-export default DndTest;
+const mapStateToProps = state => ({
+    user: state.login.user
+});
+
+export default connect(mapStateToProps, {})(DndTest);
+// export default DndTest;
