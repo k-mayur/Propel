@@ -30,15 +30,6 @@ class Login extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   fetch("/api/users/login")
-  //     .then(data => data.json())
-  //     .then(data => {
-  //       console.log(data);
-  //       this.setState({ data: data });
-  //     });
-  // }
-
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
