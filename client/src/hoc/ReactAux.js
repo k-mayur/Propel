@@ -1,4 +1,2 @@
-const auxc = props => props.children;
-const myData = "c";
-const decondData = "c2";
-export default auxc;
+const aux = props => props.children;
+export default aux;
