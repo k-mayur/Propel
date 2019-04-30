@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import Register from "./components/Register/Register";
 import PrivateRoute from "./components/PrivetRoutes/PriveteRoutes";
 import Dashboard from "./components/Dashbard/Dashboard";
+import Trainee from './components/Trainee/dnd/DntTest/index'
 import classes from "./App.css";
 
 class App extends React.Component {
@@ -20,7 +21,7 @@ class App extends React.Component {
             <Route path="/" component={Home} exact />
             <Route path="/login" component={Login} exact />
             <Route path="/register" component={Register} exact />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/dashboard" component={Trainee} />
             <Route component={Error} />
           </Switch>
         </BrowserRouter>

@@ -12,13 +12,11 @@ const users = require("./routes/users");
 require("./config/passport")(passport);
 
 // db config
-//const db = require("./config/keys").MongoURI;
+const db = require("./config/keys").MongoURI;
 
 // connect to mongoose
 mongoose
-  .connect("mongodb://localhost/propel", {
-    useNewUrlParser: true
-  })
+  .connect(db, {useNewUrlParser: true})
   .then(() => console.log("MongoDb connected"))
   .catch(err => console.log(err));
 
