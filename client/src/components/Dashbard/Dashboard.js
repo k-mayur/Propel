@@ -5,12 +5,29 @@ import { logoutUser } from "../../store/actions/login";
 import classes from './Dashboard.css'
 
 class Dashboard extends Component {
+  // state={
+  //   errors: {},
+  //   userType: ""
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.errors) {
+  //     this.setState({
+  //       errors: nextProps.errors
+  //     });
+  //   }
+  //   if (nextProps.userType) {
+  //     this.setState({userType:nextProps.userType})
+  //   }
+  // }
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
   render() {
     const { user } = this.props.auth;
+    console.log(user);
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">

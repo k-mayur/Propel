@@ -14,7 +14,7 @@ class Login extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/dashboard"); // push user to dashboard when they login
+      this.props.history.push(`/${nextProps.auth.user.userType.toLowerCase()}`); // push user to dashboard when they login
     }
     if (nextProps.errors) {
       this.setState({
@@ -26,18 +26,11 @@ class Login extends React.Component {
   componentDidMount() {
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
+      this.props.history.push(
+        `/${this.props.auth.user.userType.toLowerCase()}`
+      );
     }
   }
-
-  // componentDidMount() {
-  //   fetch("/api/users/login")
-  //     .then(data => data.json())
-  //     .then(data => {
-  //       console.log(data);
-  //       this.setState({ data: data });
-  //     });
-  // }
 
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });

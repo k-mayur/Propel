@@ -27,9 +27,15 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+<<<<<<< HEAD
   tasks:{
     type:Array,
     default:[]
+=======
+  tasks: {
+    type: Array,
+    default: []
+>>>>>>> dev
   }
 });
 
