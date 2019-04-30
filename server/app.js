@@ -7,17 +7,19 @@ const app = express();
 
 // load routes
 const users = require("./routes/users");
+const tasks = require("./routes/tasks");
+const userTasks = require("./routes/userTasks");
 
 // passport config
 require("./config/passport")(passport);
 
 // db config
-//const db = require("./config/keys").MongoURI;
+const db = require("./config/keys").MongoURI;
 
 // connect to mongoose
 mongoose
-  .connect("mongodb://localhost/propel", {
-    useNewUrlParser: true,
+  .connect(db, {
+    useNewUrlParser: true
   })
   .then(() => console.log("MongoDb connected"))
   .catch(err => console.log(err));
@@ -44,6 +46,8 @@ app.use((req, res, next) => {
 
 // use routes
 app.use("/api/users", users);
+app.use("/api/tasks", tasks);
+app.use("/api/userTasks", userTasks);
 
 const port = 4000;
 app.listen(port, () => {

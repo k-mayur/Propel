@@ -2,20 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const UserSchema = new Schema({
-  name: {
+const TaskSchema = new Schema({
+  task: {
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true
-  },
-  userType: {
-    type: String,
-    required: true
-  },
-  password: {
+  createdBy: {
     type: String,
     required: true
   },
@@ -27,11 +19,11 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  tasks: {
-    type: Array,
-    default: []
+  dueDate: {
+    type: Date,
+    required: true
   }
 });
 
-mongoose.model("users", UserSchema);
-module.exports = UserSchema;
+mongoose.model("tasks", TaskSchema);
+module.exports = TaskSchema;

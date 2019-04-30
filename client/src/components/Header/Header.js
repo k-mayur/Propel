@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -58,12 +59,12 @@ class Header extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              <a
+              <Link
                 style={{ color: "white", textDecoration: "none" }}
-                href={homeUrl}
+                to={homeUrl}
               >
                 PropelMeAhead
-              </a>
+              </Link>
             </Typography>
             {auth && (
               <div>

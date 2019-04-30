@@ -19,8 +19,8 @@ class App extends React.Component {
   render() {
     return (
       <div className={classes.wrap}>
-        <Header />
         <BrowserRouter>
+          <Header />
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/login" component={Login} exact />
@@ -28,8 +28,8 @@ class App extends React.Component {
             <PrivateRoute exact path="/dashboard" component={Todos} />
             <Route component={Error} />
           </Switch>
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </div>
     );
   }
