@@ -1,4 +1,9 @@
-import { ADD_TASK, REMOVE_TASK, TOGGLE_TASK } from "../../store/actions/actionTypes";
+import {
+  ADD_TASK,
+  REMOVE_TASK,
+  TOGGLE_TASK,
+  SET_VISIBILITY_FILTER,
+} from "../../store/actions/actionTypes";
 
 const initialData = [];
 
@@ -14,12 +19,15 @@ const taskReducer = (state = initialData, action) => {
         },
       ];
     case TOGGLE_TASK:
-      return state.map(todo =>
-        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      return state.map(task =>
+        task.id === action.id ? { ...task, completed: !task.completed } : task
       );
     case REMOVE_TASK:
       const numIndex = parseInt(action.id);
-      return state.filter(todo => todo.id !== numIndex);
+      return state.filter(task => task.id !== numIndex);
+    case SET_VISIBILITY_FILTER: {
+      return action.filter;
+    }
     default:
       return state;
   }

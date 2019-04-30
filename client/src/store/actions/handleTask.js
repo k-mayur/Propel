@@ -3,27 +3,36 @@ import {
   REMOVE_TASK,
   TOGGLE_TASK,
   SET_VISIBILITY_FILTER,
-} from "../constants/action-types";
+} from "../actions/actionTypes";
 
-let taskId = 2;
+let taskId = 0;
 
-export const addTask = text => ({
-  type: ADD_TASK,
-  id: taskId++,
-  text,
-});
+export const addTask = text => {
+  return {
+    type: ADD_TASK,
+    id: taskId++,
+    text,
+    completed: false,
+  };
+};
 
-export const deleteTask = id => ({
-  type: REMOVE_TASK,
-  id: id,
-});
+export const deleteTask = id => {
+  return {
+    type: REMOVE_TASK,
+    id: id,
+  };
+};
 
-export const toggleTask = id => ({
-  type: TOGGLE_TASK,
-  id: id,
-});
+export const toggleTask = id => {
+  return {
+    type: TOGGLE_TASK,
+    id,
+  };
+};
 
-export const setVisibilityFilter = filter => ({
-  type: SET_VISIBILITY_FILTER,
-  filter,
-});
+export const setVisibilityFilter = filter => {
+  return {
+    type: SET_VISIBILITY_FILTER,
+    filter,
+  };
+};
