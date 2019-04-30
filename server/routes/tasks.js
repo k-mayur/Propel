@@ -4,7 +4,7 @@ var passport = require("passport");
 const router = express.Router();
 
 // Load input validation
-const validateRegisterInput = require("../validation/tasks");
+const validateTaskInput = require("../validation/tasks");
 // load task model
 require("../models/Task");
 const Task = mongoose.model("tasks");
@@ -54,6 +54,7 @@ router.put(
       // new values
       task.task = req.body.task;
       task.dueDate = req.body.dueDate;
+      task.updatedDate = Date.now;
       task
         .save()
         .then(task => {
