@@ -51,7 +51,12 @@ class Header extends React.Component {
     const open = Boolean(anchorEl);
     let homeUrl = "/";
     if (auth) {
-      homeUrl = "/dashboard";
+      if (this.props.auth.user.userType === "MENTOR") {
+        homeUrl = "/mentor";
+      }
+      if (this.props.auth.user.userType === "TRAINEE") {
+        homeUrl = "/trainee";
+      }
     }
 
     return (
@@ -91,14 +96,15 @@ class Header extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem>
-                    <Link
-                      style={{ textDecoration: "none", color: "#202020" }}
-                      to="/dashboard"
-                    >
-                      Profile
-                    </Link>{" "}
-                  </MenuItem>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "#202020"
+                    }}
+                    to="/dashboard"
+                  >
+                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  </Link>{" "}
                   <MenuItem onClick={this.handleClose}>Notifications</MenuItem>
                   <MenuItem onClick={this.handleClose}>Activities</MenuItem>
                   <MenuItem onClick={this.onLogoutClick}>Log out</MenuItem>
