@@ -1,6 +1,6 @@
 # PropelMeAhead
 
-PropelMeAhead is a online platform for propel school.
+PropelMeAhead is a web application for propel school management.
 
 ## User Stories
 
