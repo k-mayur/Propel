@@ -15,8 +15,11 @@ const footer = props => {
       </div>
       <div className="footer-copyright">
         <div className="container">
-          © 2019 Copyright by cohort8 JavaScript - March 4th Batch Team-2.
-          <a className="grey-text text-lighten-4 right" href="#!">
+          © 2019 Copyright cohort8 JavaScript Batch Team.
+          <a
+            className="grey-text text-lighten-4 right"
+            href="https://github.com/k-mayur/Propel/tree/dev"
+          >
             Resources
           </a>
         </div>
