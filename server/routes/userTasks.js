@@ -84,26 +84,35 @@ router.put(
   (req, res) => {
     User.findOne({
       _id: req.body.traineeId
-    }).then(user => {
-      const newTasks = Object.assign([], user.tasks);
-      const updatedTasks = newTasks.map(task => {
-        if (task !== null) {
-          if (task.id == req.body.taskId) {
-            task.status = req.body.status;
+    }).then(async user => {
+      const newtask = function(user) {
+        const newTasks = Object.assign([], user.tasks);
+        const updatedTasks = newTasks.map(task => {
+          if (task !== null) {
+            if (task.id == req.body.taskId) {
+              task.status = req.body.status;
+            }
+            return task;
+          } else {
+            return;
           }
-          return task;
-        } else {
-          return;
-        }
-      });
-      user.tasks = updatedTasks;
-      console.log(user.tasks);
-      user
-        .save()
-        .then(user => {
-          res.status(200).json(user);
-        })
-        .catch(err => console.log(err));
+        });
+        console.log(updatedTasks, "up");
+        return updatedTasks;
+      };
+      const savetask = function(user) {
+        console.log(user.tasks, "save");
+        user.markModified("tasks");
+        user
+          .save()
+          .then(user => {
+            res.status(200).json(user);
+          })
+          .catch(err => console.log(err));
+      };
+      user.tasks = await newtask(user);
+
+      await savetask(user);
     });
   }
 );
@@ -128,6 +137,7 @@ router.put(
         }
       });
       user.tasks = updatedTasks;
+      user.markModified("tasks");
       user
         .save()
         .then(() => {
