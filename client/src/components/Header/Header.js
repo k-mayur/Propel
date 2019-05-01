@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -34,10 +34,6 @@ class Header extends React.Component {
     e.preventDefault();
     this.props.logoutUser();
     this.setState({ anchorEl: null });
-  };
-
-  handleDash = () => {
-    return <Redirect to="/dashboard" />;
   };
 
   handleMenu = event => {
@@ -95,7 +91,14 @@ class Header extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleDash}>Profile</MenuItem>
+                  <MenuItem>
+                    <Link
+                      style={{ textDecoration: "none", color: "#202020" }}
+                      to="/dashboard"
+                    >
+                      Profile
+                    </Link>{" "}
+                  </MenuItem>
                   <MenuItem onClick={this.handleClose}>Notifications</MenuItem>
                   <MenuItem onClick={this.handleClose}>Activities</MenuItem>
                   <MenuItem onClick={this.onLogoutClick}>Log out</MenuItem>
