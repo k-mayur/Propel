@@ -14,7 +14,7 @@ class Home extends React.Component {
               &nbsp; today!
             </h4>
             <p className="flow-text grey-text text-darken-1">
-              A MountBlue Technology Career Booster Program
+              A MountBlue Technologies Career Booster Program
             </p>
             <br />
             <Link
