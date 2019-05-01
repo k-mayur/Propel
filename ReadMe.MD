@@ -26,3 +26,197 @@ PropelMeAhead is a online platform for propel school.
 - [ ] A trainee will get notification from mentor if due date exceeded.
 - [ ] At any point in time, a trainee can change the status of a task based on his work on that task
 - [ ] A trainee can check his progress.
+
+## Api docs
+
+#### Login
+
+##### /api/users/login POST
+
+- | Field    | Required |   Type |
+  | :------- | -------: | -----: |
+  | email    |      Yes | string |
+  | password |      Yes | string |
+
+- res
+
+  - ```json
+    {
+        "success" : true,
+        "token" : "Bearer <JWTtoken>"
+    }
+
+    or
+
+    {
+        "errors" : "errors"
+    }
+    ```
+
+#### Register
+
+##### /api/users/register POST
+
+- | Field     | Required |   Type |
+  | :-------- | -------: | -----: |
+  | name      |      Yes | string |
+  | userType  |      Yes | string |
+  | email     |      Yes | string |
+  | password  |      Yes | string |
+  | password2 |      Yes | string |
+
+- res
+
+  - ```json
+    {
+        userObject
+    }
+
+    or
+
+    {
+        "errors" : "errors"
+    }
+    ```
+
+#### Get Tasks
+
+##### /api/tasks GET
+
+- res
+  - ```json
+    [{ taskObjects }]
+    ```
+
+#### Add Tasks
+
+##### /api/tasks/add POST
+
+- | Field     | Required |   Type |
+  | :-------- | -------: | -----: |
+  | task      |      Yes | string |
+  | createdBy |      Yes | string |
+  | dueDate   |      Yes |   date |
+
+- res
+  - ```json
+    {
+      taskObject
+    }
+    ```
+
+#### Edit Tasks
+
+##### /api/tasks/edit/:id PUT
+
+- | Field   | Required |   Type |
+  | :------ | -------: | -----: |
+  | task    |      Yes | string |
+  | dueDate |      Yes |   date |
+
+- res
+  - ```json
+    {
+      taskObject
+    }
+    ```
+
+#### Delete Tasks
+
+##### /api/tasks/:id DELETE
+
+- res
+  - ```json
+    {
+      "msg": "deleted"
+    }
+    ```
+
+#### Get Tasks of a trainee
+
+##### /api/userTasks GET
+
+- | Field | Required |   Type |
+  | :---- | -------: | -----: |
+  | id    |      Yes | string |
+
+- res
+  - ```json
+    [{ taskObjects }]
+    ```
+
+#### Get Trainees
+
+##### /api/userTasks/trainee GET
+
+- | Field    | Required |   Type |
+  | :------- | -------: | -----: |
+  | userType |      Yes | string |
+
+- res
+  - ```json
+    [{ traineeObjects }]
+    ```
+
+#### Get Mentors
+
+##### /api/userTasks/mentor GET
+
+- | Field    | Required |   Type |
+  | :------- | -------: | -----: |
+  | userType |      Yes | string |
+
+- res
+  - ```json
+    [{ mentorObjects }]
+    ```
+
+#### Assign Task to a trainee
+
+##### /api/userTasks/assign PUT
+
+- | Field     | Required |   Type |
+  | :-------- | -------: | -----: |
+  | taskId    |      Yes | string |
+  | mentorId  |      Yes | string |
+  | traineeId |      Yes | string |
+
+- res
+  - ```json
+    {
+      traineeObject
+    }
+    ```
+
+#### Update trainee's Task status (CYO, NYS, COM)
+
+##### /api/userTasks/update PUT
+
+- | Field     | Required |   Type |
+  | :-------- | -------: | -----: |
+  | taskId    |      Yes | string |
+  | status    |      Yes | string |
+  | traineeId |      Yes | string |
+
+- res
+  - ```json
+    {
+      traineeObject
+    }
+    ```
+
+#### Delete trainee Task
+
+##### /api/userTasks/delete PUT
+
+- | Field     | Required |   Type |
+  | :-------- | -------: | -----: |
+  | taskId    |      Yes | string |
+  | traineeId |      Yes | string |
+
+- res
+  - ```json
+    {
+      traineeObject
+    }
+    ```

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -34,6 +34,10 @@ class Header extends React.Component {
     e.preventDefault();
     this.props.logoutUser();
     this.setState({ anchorEl: null });
+  };
+
+  handleDash = () => {
+    return <Redirect to="/dashboard" />;
   };
 
   handleMenu = event => {
@@ -91,7 +95,7 @@ class Header extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleDash}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>Notifications</MenuItem>
                   <MenuItem onClick={this.handleClose}>Activities</MenuItem>
                   <MenuItem onClick={this.onLogoutClick}>Log out</MenuItem>
@@ -111,7 +115,7 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.login,
+  auth: state.login
 });
 export default connect(
   mapStateToProps,
