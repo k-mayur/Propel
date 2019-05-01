@@ -39,18 +39,19 @@ PropelMeAhead is a online platform for propel school.
   | password |      Yes | string |
 
 - res
-  - ````json
+
+  - ```json
     {
         "success" : true,
         "token" : "Bearer <JWTtoken>"
     }
-    ```json
+
     or
-    ```json
+
     {
         "errors" : "errors"
     }
-    ````
+    ```
 
 ##### /api/users/register POST
 
@@ -63,17 +64,18 @@ PropelMeAhead is a online platform for propel school.
   | password2 |      Yes | string |
 
 - res
-  - ````json
+
+  - ```json
     {
         userObject
     }
-    ```json
+
     or
-    ```json
+
     {
         "errors" : "errors"
     }
-    ````
+    ```
 
 ##### /api/tasks GET
 
