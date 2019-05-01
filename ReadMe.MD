@@ -53,6 +53,8 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
+#### Register
+
 ##### /api/users/register POST
 
 - | Field     | Required |   Type |
@@ -77,12 +79,16 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
+#### Get Tasks
+
 ##### /api/tasks GET
 
 - res
   - ```json
     [{ taskObjects }]
     ```
+
+#### Add Tasks
 
 ##### /api/tasks/add POST
 
@@ -99,6 +105,8 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
+#### Edit Tasks
+
 ##### /api/tasks/edit/:id PUT
 
 - | Field   | Required |   Type |
@@ -113,6 +121,8 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
+#### Delete Tasks
+
 ##### /api/tasks/:id DELETE
 
 - res
@@ -121,6 +131,8 @@ PropelMeAhead is a online platform for propel school.
       "msg": "deleted"
     }
     ```
+
+#### Get Tasks of a trainee
 
 ##### /api/userTasks GET
 
@@ -133,6 +145,8 @@ PropelMeAhead is a online platform for propel school.
     [{ taskObjects }]
     ```
 
+#### Get Trainees
+
 ##### /api/userTasks/trainee GET
 
 - | Field    | Required |   Type |
@@ -144,6 +158,8 @@ PropelMeAhead is a online platform for propel school.
     [{ traineeObjects }]
     ```
 
+#### Get Mentors
+
 ##### /api/userTasks/mentor GET
 
 - | Field    | Required |   Type |
@@ -154,6 +170,8 @@ PropelMeAhead is a online platform for propel school.
   - ```json
     [{ mentorObjects }]
     ```
+
+#### Assign Task to a trainee
 
 ##### /api/userTasks/assign PUT
 
@@ -170,6 +188,8 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
+#### Update trainee's Task status (CYO, NYS, COM)
+
 ##### /api/userTasks/update PUT
 
 - | Field     | Required |   Type |
@@ -184,6 +204,8 @@ PropelMeAhead is a online platform for propel school.
       traineeObject
     }
     ```
+
+#### Delete trainee Task
 
 ##### /api/userTasks/delete PUT
 
