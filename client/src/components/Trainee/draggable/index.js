@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
-let draggedItemId ='';
+// let draggedItemId ='';
 
 class Draggable extends Component {
 
     drag = (e) => {
-        draggedItemId=e.target.id;
+        // draggedItemId=e.target.id;
         // console.log(e.target.id)
         e.dataTransfer.setData('transfer', e.target.id);
     }
 
-    noAllowDrop = (e) => {
-        if (e.target.parentNode.id === draggedItemId) e.stopPropagation();
-    }
+    // noAllowDrop = (e) => {
+    //     // console.log(e.target.id)
+    //     if (e.target.parentNode.id === draggedItemId) e.stopPropagation();
+    // }
 
     render() {
         return (
