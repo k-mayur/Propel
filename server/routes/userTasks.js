@@ -125,17 +125,21 @@ router.put(
     User.findOne({ _id: req.body.traineeId }).then(user => {
       //delete task logic
       const newTasks = Object.assign([], user.tasks);
-      const updatedTasks = newTasks.map(task => {
-        if (task !== null) {
-          if (task.id == req.body.taskId) {
-            return;
+      const updatedTasks = newTasks
+        .map(task => {
+          if (task !== null) {
+            if (task.id == req.body.taskId) {
+              return;
+            } else {
+              return task;
+            }
           } else {
-            return task;
+            return;
           }
-        } else {
-          return;
-        }
-      });
+        })
+        .filter(task => {
+          return task != null;
+        });
       user.tasks = updatedTasks;
       user.markModified("tasks");
       user
