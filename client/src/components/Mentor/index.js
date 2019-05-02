@@ -10,6 +10,9 @@ import AddTask from "./addTaskForm";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import { Dropdown } from "semantic-ui-react";
 
 export default class Todos extends Component {
   state = {
@@ -18,7 +21,7 @@ export default class Todos extends Component {
     options: [],
   };
 
-  options = ["option1", "option2", "option3"];
+  options = ["Pratip", "Harsha", "Mayur"];
 
   componentDidMount = () => {
     axios.get("http://localhost:4000/api/tasks").then(res => {
@@ -66,8 +69,10 @@ export default class Todos extends Component {
   };
 
   handleChange = e => {
-    this.setState({})
+    this.setState({ options: e.target.value });
+    // console.log(e.target.value);
   };
+
 
   render() {
     const todos = this.state.todos;
@@ -88,39 +93,18 @@ export default class Todos extends Component {
             >
               <h4 class="z-depth-5">{todo.task}</h4>
             </span>
-            <h6>assigned to: </h6>
+            <span style={{ marginTop: "20px", marginRight: "2rem" }}>
+              assign to:{" "}
+            </span>
 
-            {/* <div className="input-field col s12 ">
-              <a class="dropdown-trigger btn" href="#" data-target="dropdown1">
-                Choose trainee!
-              </a>
-              <ul id="dropdown1" class="dropdown-content">
-                <li>
-                  <a href="#!">one</a>
-                </li>
-                <li>
-                  <a href="#!">two</a>
-                </li>
-                <li class="divider" tabindex="-1" />
-                <li>
-                  <a href="#!">three</a>
-                </li>
-                <li>
-                  <a href="#!">
-                    <i class="material-icons">view_module</i>four
-                  </a>
-                </li>
-                <li>
-                  <a href="#!">
-                    <i class="material-icons">cloud</i>five
-                  </a>
-                </li>
-              </ul>
-            </div> */}
-
-            <Select multiple value={this.options}>
+            <Select
+              multiple
+              value={this.state.options}
+              onChange={this.handleChange}
+              input={<Input id="select-multiple" />}
+            >
               {this.options.map(option => {
-                return <MenuItem>{option}</MenuItem>;
+                return <MenuItem value={option}>{option}</MenuItem>;
               })}
             </Select>
           </div>
@@ -134,8 +118,10 @@ export default class Todos extends Component {
       <div>
         <div className="todo-app container">
           <AddTask addTodo={this.addTodo} />
-          <h1 className="center blue-text">List of Tasks</h1>
-          <div className="todos collection">{todoList}</div>
+          <h1 className="center blue-text">
+            List of Tasks
+          </h1>
+          <div className=" card-content">{todoList}</div>
         </div>
       </div>
     );
