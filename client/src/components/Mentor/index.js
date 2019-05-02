@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import axios from "axios";
 // import "./Todos.css"
 // import $ from "jquery";
 import AddTask from "./addTaskForm";
@@ -10,16 +11,16 @@ import AddTask from "./addTaskForm";
 
 export default class Todos extends Component {
   state = {
-    todos: [
-      { id: 1, content: "eat" },
-      { id: 2, content: "sleep" },
-      { id: 3, content: "code" },
-    ],
-    trainees: [
-      { id: 1, name: "mayur" },
-      { id: 2, name: "harsha" },
-      { id: 3, name: "pratip" },
-    ],
+    todos: [],
+    trainees: [],
+  };
+
+  componentDidMount = () => {
+    axios.get("http://localhost:4000/api/tasks").then(res => {
+      const todos = res.data;
+      this.setState({ todos: todos.tasks });
+    });
+    // console.log(this.state.todos);
   };
   addTodo = todo => {
     todo.id = Math.random();
@@ -30,7 +31,8 @@ export default class Todos extends Component {
   };
   render() {
     const todos = this.state.todos;
-    const trainees = this.state.trainees;
+    // const trainees = this.state.trainees;
+    // console.log(todos);
     const todoList = todos.length ? (
       todos.map(todo => {
         return (
@@ -40,7 +42,7 @@ export default class Todos extends Component {
                 deleteTodo(todo.id);
               }}
             >
-              {todo.content}
+              {todo.task}
             </span>
             <h6>assigned to: </h6>
 
