@@ -28,7 +28,7 @@ export default class AddTaskForm extends Component {
     e.preventDefault();
     this.props.addTodo(this.state);
     this.setState({
-      content: "",
+      task: "",
       createdBy: "",
       dueDate: "",
     });
@@ -65,6 +65,7 @@ export default class AddTaskForm extends Component {
                 type="text"
                 class="validate"
                 onChange={this.handleTaskChange}
+                value={this.state.task}
               />
               <label for="add_task">Add task:</label>
             </div>
@@ -74,6 +75,7 @@ export default class AddTaskForm extends Component {
                 type="text"
                 class="validate"
                 onChange={this.handleCreatedChange}
+                value={this.state.createdBy}
               />
               <label for="created_by">Created by:</label>
             </div>
@@ -82,6 +84,7 @@ export default class AddTaskForm extends Component {
                 type="date"
                 class="datepicker"
                 onChange={this.handleDateChange}
+                value={this.state.dueDate}
               />
               <label for="due_Date">Due date:</label>
             </div>

@@ -56,13 +56,17 @@ export default class Todos extends Component {
     const todoList = todos.length ? (
       todos.map(todo => {
         return (
-          <div className="collection-item todoItem" key={todo.id}>
+          <div
+            className="collection-item todoItem"
+            key={todo.id}
+            style={{ marginBottom: "10px" }}
+          >
             <span
               onClick={() => {
                 deleteTodo(todo["_id"]);
               }}
             >
-              <h4>{todo.task}</h4>
+              <h4 class="z-depth-5">{todo.task}</h4>
             </span>
             <h6>assigned to: </h6>
 
@@ -124,8 +128,8 @@ export default class Todos extends Component {
     return (
       <div>
         <div className="todo-app container">
-          <h1 className="center blue-text">Tasks</h1>
           <AddTask addTodo={this.addTodo} />
+          <h1 className="center blue-text">List of Tasks</h1>
           <div className="todos collection">{todoList}</div>
         </div>
       </div>
