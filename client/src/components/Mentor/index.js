@@ -1,9 +1,12 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable react/no-direct-mutation-state */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import axios from "axios";
 // import "./Todos.css"
 // import $ from "jquery";
 import AddTask from "./addTaskForm";
+// import { error } from "util";
 
 // $(document).ready(function() {
 //   $('select').material_select();
@@ -45,6 +48,7 @@ export default class Todos extends Component {
       })
       .catch(err => console.log(err));
   };
+
   render() {
     const todos = this.state.todos;
     // const trainees = this.state.trainees;
@@ -55,7 +59,7 @@ export default class Todos extends Component {
           <div className="collection-item todoItem" key={todo.id}>
             <span
               onClick={() => {
-                deleteTodo(todo.id);
+                deleteTodo(todo["_id"]);
               }}
             >
               <h4>{todo.task}</h4>
@@ -105,12 +109,16 @@ export default class Todos extends Component {
     );
 
     const deleteTodo = id => {
-      const todos = this.state.todos.filter(todo => {
-        return todo.id !== id;
-      });
-      this.setState({
-        todos: todos,
-      });
+      //   console.log(id);
+      let isDelete = confirm("Do you want to delete?");
+      if (isDelete) {
+        axios.delete(`http://localhost:4000/api/tasks/${id}`).then(res => {
+          this.state.todos = this.state.todos.filter(data => {
+            return data["_id"] !== id;
+          });
+          this.setState({});
+        });
+      }
     };
 
     return (
