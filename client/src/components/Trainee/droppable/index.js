@@ -8,17 +8,22 @@ let status = ''
 class Droppable extends Component {
   drop = (e) => {
     e.preventDefault();
-    if (e.target.classList.contains('DndTest-title-102')) {
-      taskId = draggedItemId; status = e.target.parentNode.id;
+    // console.log(e.target)
+    if (e.target.classList.contains('MuiTypography-root-44')) {
+      taskId = draggedItemId; 
+      status = e.target.parentNode.id;
+      return this.props.changeStatus(taskId, status)
     }
-    if (e.target.classList.contains('ffmMtm')) {
-      taskId = draggedItemId; status = e.target.parentNode.parentNode.id;
+    if (e.target.classList.contains('item')) {
+      taskId = draggedItemId; 
+      status = e.target.parentNode.parentNode.id;
+      return this.props.changeStatus(taskId, status)
     }
     if (e.target.id === 'NYS' || e.target.id === 'CWO' || e.target.id === 'COM') {
       taskId = draggedItemId;
       status = e.target.id;
     }
-    return this.props.changeStatus(taskId,status)
+    return this.props.changeStatus(taskId, status)
   }
 
   allowDrop = (e) => {
