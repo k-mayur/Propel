@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+// const fs = require('fs-extra');
+// const multer = require('multer');
+// const util = require('util');
 
 const keys = require("../config/keys").secretKey;
 
