@@ -23,10 +23,15 @@ export default class Todos extends Component {
     // console.log(this.state.todos);
   };
   addTodo = todo => {
-    todo.id = Math.random();
-    let todos = [...this.state.todos, todo];
-    this.setState({
-      todos: todos,
+    // todo.id = Math.random();
+    // let todos = [...this.state.todos, todo];
+    // this.setState({
+    //   todos: todos,
+    // });
+
+    console.log(todo);
+    axios.post("http://localhost:4000/api/tasks/add", { todo }).then(res => {
+      console.log(res);
     });
   };
   render() {
