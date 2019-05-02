@@ -57,9 +57,9 @@ export default class Todos extends Component {
       todos.map(todo => {
         return (
           <div
-            className="collection-item todoItem"
+            className="collection-item todoItem "
+            style={{margin: "50px"}}
             key={todo.id}
-            style={{ marginBottom: "10px" }}
           >
             <span
               onClick={() => {
