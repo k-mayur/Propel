@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 var passport = require("passport");
 const router = express.Router();
+const jwt_decode = require("jwt-decode");
 
 // Load input validation
 const validateUserTaskInput = require("../validation/userTasks");
@@ -11,12 +12,12 @@ require("../models/User");
 const Task = mongoose.model("tasks");
 const User = mongoose.model("users");
 
-// get task
+// get tasks
 router.get(
-  "/",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ _id: req.body.id })
+    User.findOne({ _id: req.params.id })
       .then(user => {
         res.status(200).json(user.tasks);
       })
@@ -31,6 +32,7 @@ router.get(
   (req, res) => {
     User.find({ userType: "TRAINEE" })
       .then(users => {
+        console.log("sadsad");
         res.status(200).json(users);
       })
       .catch(err => console.log(err));
@@ -55,12 +57,13 @@ router.put(
   "/assign",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
     Task.findOne({ _id: req.body.taskId }).then(task => {
       const newTask = {
         task: task.task,
         dueDate: task.dueDate,
         status: "NYS",
-        assignedBy: req.body.mentorId,
+        assignedBy: userObj.id,
         id: mongoose.Types.ObjectId()
       };
       User.findOne({ _id: req.body.traineeId }).then(trainee => {
@@ -82,37 +85,29 @@ router.put(
   "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
     User.findOne({
-      _id: req.body.traineeId
-    }).then(async user => {
-      const newtask = function(user) {
-        const newTasks = Object.assign([], user.tasks);
-        const updatedTasks = newTasks.map(task => {
-          if (task !== null) {
-            if (task.id == req.body.taskId) {
-              task.status = req.body.status;
-            }
-            return task;
-          } else {
-            return;
+      _id: userObj.id
+    }).then(user => {
+      const newTasks = Object.assign([], user.tasks);
+      const updatedTasks = newTasks.map(task => {
+        if (task !== null) {
+          if (task.id == req.body.taskId) {
+            task.status = req.body.status;
           }
-        });
-        console.log(updatedTasks, "up");
-        return updatedTasks;
-      };
-      const savetask = function(user) {
-        console.log(user.tasks, "save");
-        user.markModified("tasks");
-        user
-          .save()
-          .then(user => {
-            res.status(200).json(user);
-          })
-          .catch(err => console.log(err));
-      };
-      user.tasks = await newtask(user);
-
-      await savetask(user);
+          return task;
+        } else {
+          return;
+        }
+      });
+      user.tasks = updatedTasks;
+      user.markModified('tasks');
+      user
+        .save()
+        .then(user => {
+          res.status(200).json(user);
+        })
+        .catch(err => console.log(err));
     });
   }
 );
@@ -122,7 +117,8 @@ router.put(
   "/delete",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ _id: req.body.traineeId }).then(user => {
+    const userObj = jwt_decode(req.headers.authorization);
+    User.findOne({ _id: userObj.id }).then(user => {
       //delete task logic
       const newTasks = Object.assign([], user.tasks);
       const updatedTasks = newTasks
