@@ -57,7 +57,7 @@ class DndTest extends Component {
         return (
             <div id={status}>{filteredData.map((ele) =>
                 <Draggable id={ele.id} key={ele.id} style={{ margin: '8px' }}>
-                    <Item>
+                    <Item className="item">
                         <Time className={this.props.classes[status]}> &nbsp;{new Date(ele.dueDate).getDate()}/{new Date(ele.dueDate).getMonth() + 1}&nbsp;</Time>
                         {ele.task}
                     </Item>
