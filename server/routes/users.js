@@ -33,7 +33,7 @@ router.post("/login", (req, res, next) => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
-        console.log(user);
+        // console.log(user);
         const payload = {
           id: user.id,
           name: user.name,

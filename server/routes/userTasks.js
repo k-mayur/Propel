@@ -13,10 +13,10 @@ const User = mongoose.model("users");
 
 // get task
 router.get(
-  "/",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ _id: req.body.id })
+    User.findOne({ _id: req.params.id })
       .then(user => {
         res.status(200).json(user.tasks);
       })
@@ -31,6 +31,7 @@ router.get(
   (req, res) => {
     User.find({ userType: "TRAINEE" })
       .then(users => {
+        console.log("sadsad");
         res.status(200).json(users);
       })
       .catch(err => console.log(err));
@@ -97,7 +98,7 @@ router.put(
         }
       });
       user.tasks = updatedTasks;
-      console.log(user.tasks);
+      user.markModified('tasks');
       user
         .save()
         .then(user => {
