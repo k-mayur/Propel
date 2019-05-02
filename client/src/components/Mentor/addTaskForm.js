@@ -2,11 +2,25 @@ import React, { Component } from "react";
 
 export default class AddTaskForm extends Component {
   state = {
-    content: "",
+    task: "",
+    createdBy: "",
+    dueDate: "",
   };
-  handleChange = e => {
+  handleTaskChange = e => {
     this.setState({
-      content: e.target.value,
+      task: e.target.value,
+    });
+  };
+
+  handleCreatedChange = e => {
+    this.setState({
+      createdBy: e.target.value,
+    });
+  };
+
+  handleDateChange = e => {
+    this.setState({
+      dueDate: e.target.value,
     });
   };
 
@@ -15,18 +29,72 @@ export default class AddTaskForm extends Component {
     this.props.addTodo(this.state);
     this.setState({
       content: "",
+      createdBy: "",
+      dueDate: "",
     });
   };
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div class="row">
+        {/* <form onSubmit={this.handleSubmit}>
           <label>Add new task:</label>
           <input
             type="text"
-            onChange={this.handleChange}
+            onChange={this.handleContentChange}
             value={this.state.content}
           />
+          <label>Created By:</label>
+          <input
+            type="text"
+            onChange={this.handleCreatedChange}
+            value={this.state.content}
+          />
+          <label>Due date:</label>
+          <input
+            type="text"
+            onChange={this.handleDateChange}
+            value={this.state.content}
+            className = "datepicker"
+          />
+        </form> */}
+        <form className="col s12">
+          <div className="row">
+            <div className="input-field col s6">
+              <input
+                id="add_task"
+                type="text"
+                class="validate"
+                onChange={this.handleTaskChange}
+              />
+              <label for="add_task">Add task:</label>
+            </div>
+            <div className="input-field col s6">
+              <input
+                id="created_by"
+                type="text"
+                class="validate"
+                onChange={this.handleCreatedChange}
+              />
+              <label for="created_by">Created by:</label>
+            </div>
+            <div className="input-field col s6">
+              <input
+                type="date"
+                class="datepicker"
+                onChange={this.handleDateChange}
+              />
+              <label for="due_Date">Due date:</label>
+            </div>
+          </div>
+          <button
+            class="btn waves-effect waves-light btn-small"
+            type="submit"
+            name="action"
+            onClick={this.handleSubmit}
+          >
+            Submit
+            <i class="material-icons right">send</i>
+          </button>
         </form>
       </div>
     );

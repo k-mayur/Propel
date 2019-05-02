@@ -29,10 +29,21 @@ export default class Todos extends Component {
     //   todos: todos,
     // });
 
-    console.log(todo);
-    axios.post("http://localhost:4000/api/tasks/add", { todo }).then(res => {
-      console.log(res);
-    });
+    // console.log(todo);
+    axios
+      .post("http://localhost:4000/api/tasks/add", todo)
+      .then(res => {
+        const data = res.data;
+        // const newTodo = {
+        //   task: data.task,
+        //   createdBy: data.createdBy,
+        //   dueDate: data.dueDate,
+        // };
+        const updateTodos = [...this.state.todos];
+        updateTodos.push(data);
+        this.setState({ todos: updateTodos });
+      })
+      .catch(err => console.log(err));
   };
   render() {
     const todos = this.state.todos;
@@ -47,7 +58,7 @@ export default class Todos extends Component {
                 deleteTodo(todo.id);
               }}
             >
-              {todo.task}
+              <h4>{todo.task}</h4>
             </span>
             <h6>assigned to: </h6>
 
