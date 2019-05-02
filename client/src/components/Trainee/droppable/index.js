@@ -8,20 +8,13 @@ let status = ''
 class Droppable extends Component {
   drop = (e) => {
     e.preventDefault();
-    // const data = e.dataTransfer.getData('transfer');
-    // console.log(e.target.id)
-    // console.log(document.getElementById(data).textContent)
-    // console.log(draggedItemId)
     if (e.target.classList.contains('DndTest-title-102')) {
-      // e.target.parentNode.appendChild(document.getElementById(data));
       taskId = draggedItemId; status = e.target.parentNode.id;
     }
     if (e.target.classList.contains('ffmMtm')) {
-      // e.target.parentNode.parentNode.appendChild(document.getElementById(data));
       taskId = draggedItemId; status = e.target.parentNode.parentNode.id;
     }
     if (e.target.id === 'NYS' || e.target.id === 'CWO' || e.target.id === 'COM') {
-      // e.target.appendChild(document.getElementById(data)); 
       taskId = draggedItemId;
       status = e.target.id;
     }
@@ -47,4 +40,4 @@ Droppable.propTypes = {
   children: PropTypes.node
 }
 
-export { Droppable, taskId, status }
+export default Droppable;

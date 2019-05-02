@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 var passport = require("passport");
 const router = express.Router();
+const jwt_decode = require("jwt-decode");
 
 // Load input validation
 const validateUserTaskInput = require("../validation/userTasks");
@@ -11,7 +12,7 @@ require("../models/User");
 const Task = mongoose.model("tasks");
 const User = mongoose.model("users");
 
-// get task
+// get tasks
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
@@ -56,12 +57,13 @@ router.put(
   "/assign",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
     Task.findOne({ _id: req.body.taskId }).then(task => {
       const newTask = {
         task: task.task,
         dueDate: task.dueDate,
         status: "NYS",
-        assignedBy: req.body.mentorId,
+        assignedBy: userObj.id,
         id: mongoose.Types.ObjectId()
       };
       User.findOne({ _id: req.body.traineeId }).then(trainee => {
@@ -83,8 +85,9 @@ router.put(
   "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
     User.findOne({
-      _id: req.body.traineeId
+      _id: userObj.id
     }).then(user => {
       const newTasks = Object.assign([], user.tasks);
       const updatedTasks = newTasks.map(task => {
@@ -114,21 +117,27 @@ router.put(
   "/delete",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ _id: req.body.traineeId }).then(user => {
+    const userObj = jwt_decode(req.headers.authorization);
+    User.findOne({ _id: userObj.id }).then(user => {
       //delete task logic
       const newTasks = Object.assign([], user.tasks);
-      const updatedTasks = newTasks.map(task => {
-        if (task !== null) {
-          if (task.id == req.body.taskId) {
-            return;
+      const updatedTasks = newTasks
+        .map(task => {
+          if (task !== null) {
+            if (task.id == req.body.taskId) {
+              return;
+            } else {
+              return task;
+            }
           } else {
-            return task;
+            return;
           }
-        } else {
-          return;
-        }
-      });
+        })
+        .filter(task => {
+          return task != null;
+        });
       user.tasks = updatedTasks;
+      user.markModified("tasks");
       user
         .save()
         .then(() => {

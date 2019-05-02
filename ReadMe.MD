@@ -1,6 +1,6 @@
 # PropelMeAhead
 
-PropelMeAhead is a online platform for propel school.
+PropelMeAhead is a web application for propel school management.
 
 ## User Stories
 
@@ -136,10 +136,6 @@ PropelMeAhead is a online platform for propel school.
 
 ##### /api/userTasks GET
 
-- | Field | Required |   Type |
-  | :---- | -------: | -----: |
-  | id    |      Yes | string |
-
 - res
   - ```json
     [{ taskObjects }]
@@ -178,7 +174,6 @@ PropelMeAhead is a online platform for propel school.
 - | Field     | Required |   Type |
   | :-------- | -------: | -----: |
   | taskId    |      Yes | string |
-  | mentorId  |      Yes | string |
   | traineeId |      Yes | string |
 
 - res
@@ -188,7 +183,7 @@ PropelMeAhead is a online platform for propel school.
     }
     ```
 
-#### Update trainee's Task status (CYO, NYS, COM)
+#### Update trainee's Task status (CWO, NYS, COM)
 
 ##### /api/userTasks/update PUT
 
@@ -196,7 +191,6 @@ PropelMeAhead is a online platform for propel school.
   | :-------- | -------: | -----: |
   | taskId    |      Yes | string |
   | status    |      Yes | string |
-  | traineeId |      Yes | string |
 
 - res
   - ```json
@@ -212,7 +206,6 @@ PropelMeAhead is a online platform for propel school.
 - | Field     | Required |   Type |
   | :-------- | -------: | -----: |
   | taskId    |      Yes | string |
-  | traineeId |      Yes | string |
 
 - res
   - ```json

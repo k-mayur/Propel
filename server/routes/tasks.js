@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 var passport = require("passport");
 const router = express.Router();
+const jwt_decode = require("jwt-decode");
 
 // Load input validation
 const validateTaskInput = require("../validation/tasks");
@@ -14,6 +15,7 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const user = jwt_decode(req.headers.authorization);
     Task.find()
       .then(tasks => {
         res.status(200).json({

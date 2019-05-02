@@ -37,14 +37,13 @@ router.post("/login", (req, res, next) => {
         const payload = {
           id: user.id,
           name: user.name,
-          userType: user.userType,
-          tasks: user.tasks
+          userType: user.userType
         };
         jwt.sign(
           payload,
           keys,
           {
-            expiresIn: 31556926 // 1 year in seconds
+            expiresIn: 1200 // 20 minutes in seconds
           },
           (err, token) => {
             res.json({
