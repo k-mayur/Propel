@@ -9,8 +9,10 @@ import AddTask from "./addTaskForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
-import EnhancedTable from "./trainees";
-import DraggableDialog from "./traineeTasks";
+
+import EnhancedTable from './trainees'
+import FullScreenDialog from './traineeTasks'
+
 
 export default class Todos extends Component {
   state = {
@@ -38,12 +40,12 @@ export default class Todos extends Component {
         });
         // console.log(trainees);
         this.setState({ options: [...trainees] });
-        console.log(this.state.options);
-        // const status = res.data.users.map(user => {
-        //   return user.tasks.map(task => {
-        //     return { task: task.task, status: task.status };
-        //   });
-        // });
+        const status = res.data.users.map(user => {
+          return user.tasks.map(task => {
+            return { task: task.task, status: task.status };
+          });
+        });
+
 
         const trainee = res.data.users.map(user => {
           return {
@@ -52,11 +54,11 @@ export default class Todos extends Component {
             status: user.tasks.map(task => task.status),
           };
         });
+
         // console.log(trainee);
         this.setState({ traineeData: [...trainee] });
         console.log(this.state.traineeData);
 
-        // console.log(status);
       });
   };
 
@@ -176,7 +178,7 @@ export default class Todos extends Component {
     return (
       <div className="container">
         {/* <EnhancedTable/> */}
-
+        <FullScreenDialog  data={this.state.options}/>
         <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
