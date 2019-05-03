@@ -18,6 +18,7 @@ export default class Todos extends Component {
     taskId: "",
     traineeId: [],
     status: [],
+    traineeData: [],
   };
 
   componentDidMount = () => {
@@ -36,21 +37,24 @@ export default class Todos extends Component {
         // console.log(trainees);
         this.setState({ options: [...trainees] });
         console.log(this.state.options);
-        const status = res.data.users.map(user => {
-          return user.tasks.map(task => {
-            return { task: task.task, status: task.status };
-          });
-        });
+        // const status = res.data.users.map(user => {
+        //   return user.tasks.map(task => {
+        //     return { task: task.task, status: task.status };
+        //   });
+        // });
 
         const trainee = res.data.users.map(user => {
           return {
-            id: user["_id"],
+            name: user.name,
             task: user.tasks.map(task => task.task),
             status: user.tasks.map(task => task.status),
           };
         });
+        // console.log(trainee);
+        this.setState({ traineeData: [...trainee] });
+        console.log(this.state.traineeData);
 
-        console.log(status);
+        // console.log(status);
       });
   };
 
@@ -101,9 +105,20 @@ export default class Todos extends Component {
     this.setState({ taskId: e.target.id });
   };
 
-  statusHandleChange = e => {
-    console.log(e.target);
-  };
+  // statusHandleChange = e => {
+  //   // console.log(e.target);
+  //   this.state.traineeData.forEach(obj => {
+  //     if (obj.id === e.target.value[0]) {
+  //       this.state.traineeData.forEach(obj => {
+  //         return obj.task.map(data => {
+  //           return(
+  //             <h4>{data}</h4>
+  //           )
+  //         })
+  //       })
+  //     }
+  //   })
+  // };
 
   render() {
     const todos = this.state.todos;
@@ -190,26 +205,23 @@ export default class Todos extends Component {
             Assign
           </a>
         </div>
-        {/* <div
+        <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
         >
           <h6 className="card-title" style={{ marginBottom: "40px" }}>
             List of Trainees
           </h6>
-          <Select
-            multiple
-            value={this.state.trainees}
-            onChange={this.statusHandleChange}
-            input={<Input id="select-multiple" />}
-            placeholder="choose trainee"
-            style={{ marginLeft: "1rem" }}
-          >
-            {this.state.options.map(option => {
-              return <MenuItem value={option.id}>{option.name}</MenuItem>;
-            })}
-          </Select>
-        </div> */}
+          {this.state.traineeData.map(trainee => {
+            return (
+              <div>
+                <div className="left-align">
+                  <span>{trainee.name}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
