@@ -22,6 +22,7 @@ export default class Todos extends Component {
 
   componentDidMount = () => {
     axios.get("http://localhost:4000/api/tasks").then(res => {
+      console.log(res);
       const todos = res.data;
       this.setState({ todos: todos.tasks });
     });
