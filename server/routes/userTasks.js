@@ -33,7 +33,7 @@ router.get(
 
 // get trainees
 router.get(
-  "/trainee",
+  "/users/trainee",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
@@ -47,14 +47,16 @@ router.get(
             errorMsg: null
           });
         })
-        .catch(err => res.status(500).json({ errorMsg: err.message }));
+        .catch(err => {
+          res.status(500).json({ errorMsg: err.message });
+        });
     }
   }
 );
 
 // get mentors
 router.get(
-  "/mentor",
+  "/users/mentor",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);

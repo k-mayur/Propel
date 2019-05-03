@@ -85,8 +85,9 @@ PropelMeAhead is a web application for propel school management.
 
 - res
   - ```json
-    { 
-      taskObjects, errorMsg
+    {
+      taskObjects,
+      errorMsg
     }
     ```
 
@@ -94,15 +95,16 @@ PropelMeAhead is a web application for propel school management.
 
 ##### /api/tasks/add POST
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | task      |      Yes | string |
-  | dueDate   |      Yes |   date |
+- | Field   | Required |   Type |
+  | :------ | -------: | -----: |
+  | task    |      Yes | string |
+  | dueDate |      Yes |   date |
 
 - res
   - ```json
     {
-      taskObject, errorMsg
+      taskObject,
+      errorMsg
     }
     ```
 
@@ -139,38 +141,33 @@ PropelMeAhead is a web application for propel school management.
 
 - res
   - ```json
-    { 
-      taskObjects, errorMsg
+    {
+      taskObjects,
+      errorMsg
     }
     ```
 
 #### Get Trainees
 
-##### /api/userTasks/trainee GET
-
-- | Field    | Required |   Type |
-  | :------- | -------: | -----: |
-  | userType |      Yes | string |
+##### /api/userTasks/users/trainee GET
 
 - res
   - ```json
-    { 
-      traineeObjects, errorMsg
+    {
+      traineeObjects,
+      errorMsg
     }
     ```
 
 #### Get Mentors
 
-##### /api/userTasks/mentor GET
-
-- | Field    | Required |   Type |
-  | :------- | -------: | -----: |
-  | userType |      Yes | string |
+##### /api/userTasks/users/mentor GET
 
 - res
   - ```json
-    { 
-      mentorObjects, errorMsg
+    {
+      mentorObjects,
+      errorMsg
     }
     ```
 
@@ -186,23 +183,25 @@ PropelMeAhead is a web application for propel school management.
 - res
   - ```json
     {
-      traineeObject, errorMsg
+      traineeObject,
+      errorMsg
     }
     ```
-    
+
 #### Assign Task to a trainee by self
 
 ##### /api/userTasks/assignme PUT
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | task      |      Yes | string |
-  | dueDate   |      Yes | date   |
+- | Field   | Required |   Type |
+  | :------ | -------: | -----: |
+  | task    |      Yes | string |
+  | dueDate |      Yes |   date |
 
 - res
   - ```json
     {
-      traineeObject, errorMsg
+      traineeObject,
+      errorMsg
     }
     ```
 
@@ -210,15 +209,16 @@ PropelMeAhead is a web application for propel school management.
 
 ##### /api/userTasks/update PUT
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | taskId    |      Yes | string |
-  | status    |      Yes | string |
+- | Field  | Required |   Type |
+  | :----- | -------: | -----: |
+  | taskId |      Yes | string |
+  | status |      Yes | string |
 
 - res
   - ```json
     {
-      traineeObject, errorMsg
+      traineeObject,
+      errorMsg
     }
     ```
 
@@ -226,9 +226,9 @@ PropelMeAhead is a web application for propel school management.
 
 ##### /api/userTasks/delete PUT
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | taskId    |      Yes | string |
+- | Field  | Required |   Type |
+  | :----- | -------: | -----: |
+  | taskId |      Yes | string |
 
 - res
   - ```json

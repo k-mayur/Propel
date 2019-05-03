@@ -3,12 +3,15 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const busboy = require("connect-busboy");
+const busboyBodyParser = require("busboy-body-parser");
 const app = express();
 
 // load routes
 const users = require("./routes/users");
 const tasks = require("./routes/tasks");
 const userTasks = require("./routes/userTasks");
+const upload = require("./routes/upload");
 
 // passport config
 require("./config/passport")(passport);
@@ -26,9 +29,13 @@ mongoose
 
 //cors middleware
 app.use(cors());
+app.use(busboy());
 // body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// file upload middleware
+app.use(busboyBodyParser());
 
 // passport middleware must be put after express session middleware
 app.use(passport.initialize());
@@ -47,6 +54,7 @@ app.use((req, res, next) => {
 app.use("/api/users", users);
 app.use("/api/tasks", tasks);
 app.use("/api/userTasks", userTasks);
+app.use("/api/upload", upload);
 
 const port = 4000;
 app.listen(port, () => {
