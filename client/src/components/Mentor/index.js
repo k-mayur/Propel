@@ -3,22 +3,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import axios from "axios";
-// import "./Todos.css"
-// import $ from "jquery";
+
 import AddTask from "./addTaskForm";
-// import { error } from "util";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
-// import InputLabel from "@material-ui/core/InputLabel";
-// import { Dropdown } from "semantic-ui-react";
 
 export default class Todos extends Component {
   state = {
     todos: [],
     trainees: [],
     options: [],
+    taskId: "",
+    traineeId: [],
+    status: [],
   };
 
   componentDidMount = () => {
@@ -30,30 +29,27 @@ export default class Todos extends Component {
     axios
       .get("http://localhost:4000/api/userTasks/users/trainee ")
       .then(res => {
-        const trainees = res.data.users.map(user => user.name);
+        const trainees = res.data.users.map(user => {
+          return { id: user["_id"], name: user.name };
+        });
         // console.log(trainees);
         this.setState({ options: [...trainees] });
-        // console.log(this.state.options);
+        console.log(this.state.options);
+        const status = res.data.users.map(user => {
+          return user.tasks.map(task => {
+            return { task: task.task, status: task.status };
+          });
+        });
+
+        console.log(status);
       });
   };
 
   addTodo = todo => {
-    // todo.id = Math.random();
-    // let todos = [...this.state.todos, todo];
-    // this.setState({
-    //   todos: todos,
-    // });
-
-    // console.log(todo);
     axios
       .post("http://localhost:4000/api/tasks/add", todo)
       .then(res => {
         const data = res.data.task;
-        // const newTodo = {
-        //   task: data.task,
-        //   createdBy: data.createdBy,
-        //   dueDate: data.dueDate,
-        // };
         const updateTodos = [...this.state.todos];
         updateTodos.push(data);
         this.setState({ todos: updateTodos });
@@ -62,10 +58,9 @@ export default class Todos extends Component {
   };
 
   deleteTodo = id => {
-    //   console.log(id);
     let isDelete = confirm("Do you want to delete?");
     if (isDelete) {
-      axios.delete(`http://localhost:4000/api/tasks/${id}`).then(res => {
+      axios.delete(`http://localhost:4000/api/tasks/delete/${id}`).then(res => {
         this.state.todos = this.state.todos.filter(data => {
           return data["_id"] !== id;
         });
@@ -76,12 +71,34 @@ export default class Todos extends Component {
 
   handleChange = e => {
     this.setState({ trainees: e.target.value });
-    console.log(e.target.value);
+  };
+
+  assignTask = () => {
+    this.state.trainees.forEach(trainee => {
+      axios
+        .put("http://localhost:4000/api/userTasks/task/assign", {
+          taskId: this.state.taskId,
+          traineeId: trainee,
+        })
+        .then(res => {
+          alert("task assigned");
+        })
+        .catch(err => alert("error"));
+    });
+  };
+
+  getTodoId = e => {
+    console.log(e.target.id);
+    this.setState({ taskId: e.target.id });
+  };
+
+  statusHandleChange = e => {
+    console.log(e.target);
   };
 
   render() {
     const todos = this.state.todos;
-    // console.log(this.state.options);
+    // console.log(todos);
     const todoList = todos.length ? (
       todos.map(todo => {
         return (
@@ -94,36 +111,29 @@ export default class Todos extends Component {
             }}
             key={todo.id}
           >
-            <span
+            <span>
+              <form action="#">
+                <p>
+                  <label>
+                    <input
+                      type="checkbox"
+                      id={todo["_id"]}
+                      onClick={this.getTodoId}
+                    />
+                    <span>{todo.task}</span>
+                  </label>
+                </p>
+              </form>
+            </span>
+            <i
+              class="material-icons"
               onClick={() => {
                 this.deleteTodo(todo["_id"]);
               }}
+              style={{ cursor: "pointer" }}
             >
-              <h5
-                style={{
-                  borderBottom: "1px solid #8080803b",
-                  fontWeight: "100",
-                }}
-              >
-                {todo.task}
-              </h5>
-            </span>
-            <span>
-              <span style={{ fontWeight: "100", marginRight: "1rem" }}>
-                assign to:{" "}
-              </span>
-
-              <Select
-                multiple
-                value={this.state.trainees}
-                onChange={this.handleChange}
-                input={<Input id="select-multiple" />}
-              >
-                {this.state.options.map(option => {
-                  return <MenuItem value={option}>{option}</MenuItem>;
-                })}
-              </Select>
-            </span>
+              delete
+            </i>
           </div>
         );
       })
@@ -132,15 +142,7 @@ export default class Todos extends Component {
     );
 
     return (
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          position: "absolute",
-          top: "5rem",
-          left: "20rem",
-        }}
-      >
+      <div className="container">
         <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
@@ -151,6 +153,53 @@ export default class Todos extends Component {
             <h6 className="card-title">List of Tasks</h6>
             <span>{todoList}</span>
           </div>
+        </div>
+        <div
+          className="card white-grey card-panel hoverable"
+          style={{ width: "100%" }}
+        >
+          <h6 className="card-title" style={{ marginBottom: "40px" }}>
+            Assign Task
+          </h6>
+          <Select
+            multiple
+            value={this.state.trainees}
+            onChange={this.handleChange}
+            input={<Input id="select-multiple" />}
+            placeholder="choose trainee"
+            style={{ marginLeft: "1rem" }}
+          >
+            {this.state.options.map(option => {
+              return <MenuItem value={option.id}>{option.name}</MenuItem>;
+            })}
+          </Select>
+          <a
+            class="waves-effect waves-light btn-small"
+            onClick={this.assignTask}
+            style={{ marginLeft: "1rem" }}
+          >
+            Assign
+          </a>
+        </div>
+        <div
+          className="card white-grey card-panel hoverable"
+          style={{ width: "100%" }}
+        >
+          <h6 className="card-title" style={{ marginBottom: "40px" }}>
+            List of Trainees
+          </h6>
+          <Select
+            multiple
+            value={this.state.trainees}
+            onChange={this.statusHandleChange}
+            input={<Input id="select-multiple" />}
+            placeholder="choose trainee"
+            style={{ marginLeft: "1rem" }}
+          >
+            {this.state.options.map(option => {
+              return <MenuItem value={option.id}>{option.name}</MenuItem>;
+            })}
+          </Select>
         </div>
       </div>
     );
