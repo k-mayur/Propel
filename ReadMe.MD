@@ -226,9 +226,6 @@ PropelMeAhead is a web application for propel school management.
 
 ##### /api/userTasks/delete/:id PUT
 
-- | Field | Required | Type |
-  | :---- | -------: | ---: |
-
 
 - res
   - ```json
