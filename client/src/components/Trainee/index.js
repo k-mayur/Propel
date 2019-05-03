@@ -73,7 +73,7 @@ class DndTest extends Component {
         if(this.props.user.name===task.assignedBy)
             return (
                 <div className="user" style={{display:'flex',justifyContent:'space-between'}}>
-                    <div className="userDiv" style={{ fontWeight: 'bold' }}>-assigned by own</div>
+                    <div className="userDiv" style={{ fontWeight: 'bold' }}>Assigned by own</div>
                     <Button id={task.id} className="userDiv" onClick={this.deleteTask} aria-label="Delete">
                         del
                     </Button>
@@ -81,7 +81,7 @@ class DndTest extends Component {
         )
         else {
             return (
-                <div className="mentor" style={{fontWeight:'bold'}}>-assigned by {task.assignedBy.toLowerCase()}</div>
+                <div className="mentor" style={{fontWeight:'bold'}}>Assigned by {task.assignedBy.toLowerCase()}</div>
             )
         }
     }
@@ -112,7 +112,7 @@ class DndTest extends Component {
         const { classes } = this.props;
         let tasks = this.props.tasks;
         return (
-            <div>
+            <div style={{margin:'30px'}}>
                 
                 <div style={{ margin: "30px" }} >
                     <FormDialog addNewTask={this.addNewTask} />

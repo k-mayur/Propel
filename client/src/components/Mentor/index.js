@@ -9,6 +9,8 @@ import AddTask from "./addTaskForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
+import EnhancedTable from './trainees'
+import DraggableDialog from './traineeTasks'
 
 export default class Todos extends Component {
   state = {
@@ -105,20 +107,21 @@ export default class Todos extends Component {
     this.setState({ taskId: e.target.id });
   };
 
-  // statusHandleChange = e => {
-  //   // console.log(e.target);
-  //   this.state.traineeData.forEach(obj => {
-  //     if (obj.id === e.target.value[0]) {
-  //       this.state.traineeData.forEach(obj => {
-  //         return obj.task.map(data => {
-  //           return(
-  //             <h4>{data}</h4>
-  //           )
-  //         })
-  //       })
-  //     }
-  //   })
-  // };
+  traineeTasks = async e => {
+    let response = {};
+    await axios
+      .get(`http://localhost:4000/api/userTasks/${e.target.value}`)
+      .then(res => {
+        console.log(res.data)
+        response = res.data;
+      })
+      .catch(err => console.log(err));
+    return (
+      <div>
+        asdasdas
+        </div>
+    )
+  };
 
   render() {
     const todos = this.state.todos;
@@ -162,11 +165,13 @@ export default class Todos extends Component {
         );
       })
     ) : (
-      <p>No tasks yet</p>
-    );
+        <p>No tasks yet</p>
+      );
 
     return (
       <div className="container">
+        {/* <EnhancedTable/> */}
+        <DraggableDialog  data={this.state.options}/>
         <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
@@ -212,15 +217,11 @@ export default class Todos extends Component {
           <h6 className="card-title" style={{ marginBottom: "40px" }}>
             List of Trainees
           </h6>
-          {this.state.traineeData.map(trainee => {
-            return (
-              <div>
-                <div className="left-align">
-                  <span>{trainee.name}</span>
-                </div>
-              </div>
-            );
-          })}
+          <Select onChange={this.traineeTasks}>
+            {this.state.options.map(option => {
+              return <MenuItem value={option.id}>{option.name}</MenuItem>;
+            })}
+          </Select>
         </div>
       </div>
     );
