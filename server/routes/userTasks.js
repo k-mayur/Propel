@@ -77,7 +77,7 @@ router.get(
 
 // assign task by self
 router.put(
-  "/assignme",
+  "/task/assignme",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
@@ -110,7 +110,7 @@ router.put(
 
 // assign task by mentor
 router.put(
-  "/assign",
+  "/task/assign",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
@@ -145,7 +145,7 @@ router.put(
 
 // update user task
 router.put(
-  "/update",
+  "/task/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);

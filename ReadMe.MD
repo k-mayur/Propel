@@ -126,7 +126,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Delete Tasks
 
-##### /api/tasks/:id DELETE
+##### /api/tasks/delete/:id DELETE
 
 - res
   - ```json
@@ -137,7 +137,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Get Tasks of a trainee
 
-##### /api/userTasks GET
+##### /api/userTasks/:id GET
 
 - res
   - ```json
@@ -173,7 +173,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Assign Task to a trainee
 
-##### /api/userTasks/assign PUT
+##### /api/userTasks/task/assign PUT
 
 - | Field     | Required |   Type |
   | :-------- | -------: | -----: |
@@ -190,7 +190,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Assign Task to a trainee by self
 
-##### /api/userTasks/assignme PUT
+##### /api/userTasks/task/assignme PUT
 
 - | Field   | Required |   Type |
   | :------ | -------: | -----: |
@@ -207,7 +207,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Update trainee's Task status (CWO, NYS, COM)
 
-##### /api/userTasks/update PUT
+##### /api/userTasks/task/update PUT
 
 - | Field  | Required |   Type |
   | :----- | -------: | -----: |
@@ -224,11 +224,11 @@ PropelMeAhead is a web application for propel school management.
 
 #### Delete trainee Task
 
-##### /api/userTasks/delete PUT
+##### /api/userTasks/delete/:id PUT
 
-- | Field  | Required |   Type |
-  | :----- | -------: | -----: |
-  | taskId |      Yes | string |
+- | Field | Required | Type |
+  | :---- | -------: | ---: |
+
 
 - res
   - ```json
