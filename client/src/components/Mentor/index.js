@@ -21,14 +21,20 @@ export default class Todos extends Component {
     options: [],
   };
 
-  options = ["Pratip", "Harsha", "Mayur"];
-
   componentDidMount = () => {
     axios.get("http://localhost:4000/api/tasks").then(res => {
       const todos = res.data;
       this.setState({ todos: todos.tasks });
     });
-    // console.log(this.state.todos);
+
+    axios
+      .get("http://localhost:4000/api/userTasks/users/trainee ")
+      .then(res => {
+        const trainees = res.data.users.map(user => user.name);
+        // console.log(trainees);
+        this.setState({ options: [...trainees] });
+        // console.log(this.state.options);
+      });
   };
 
   addTodo = todo => {
@@ -69,14 +75,13 @@ export default class Todos extends Component {
   };
 
   handleChange = e => {
-    this.setState({ options: e.target.value });
-    // console.log(e.target.value);
+    this.setState({ trainees: e.target.value });
+    console.log(e.target.value);
   };
 
   render() {
     const todos = this.state.todos;
-    // const trainees = this.state.trainees;
-    // console.log(todos);
+    // console.log(this.state.options);
     const todoList = todos.length ? (
       todos.map(todo => {
         return (
@@ -110,11 +115,11 @@ export default class Todos extends Component {
 
               <Select
                 multiple
-                value={this.state.options}
+                value={this.state.trainees}
                 onChange={this.handleChange}
                 input={<Input id="select-multiple" />}
               >
-                {this.options.map(option => {
+                {this.state.options.map(option => {
                   return <MenuItem value={option}>{option}</MenuItem>;
                 })}
               </Select>
@@ -145,7 +150,6 @@ export default class Todos extends Component {
             <AddTask addTodo={this.addTodo} />
             <h6 className="card-title">List of Tasks</h6>
             <span>{todoList}</span>
-            <h6 className="card-title">List of Trainees</h6>
           </div>
         </div>
       </div>
