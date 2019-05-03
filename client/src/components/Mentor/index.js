@@ -9,8 +9,10 @@ import AddTask from "./addTaskForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
+
 import EnhancedTable from './trainees'
 import FullScreenDialog from './traineeTasks'
+
 
 export default class Todos extends Component {
   state = {
@@ -20,6 +22,7 @@ export default class Todos extends Component {
     taskId: "",
     traineeId: [],
     status: [],
+    traineeData: [],
   };
 
   componentDidMount = () => {
@@ -43,13 +46,19 @@ export default class Todos extends Component {
           });
         });
 
+
         const trainee = res.data.users.map(user => {
           return {
-            id: user["_id"],
+            name: user.name,
             task: user.tasks.map(task => task.task),
             status: user.tasks.map(task => task.status),
           };
         });
+
+        // console.log(trainee);
+        this.setState({ traineeData: [...trainee] });
+        console.log(this.state.traineeData);
+
       });
   };
 
@@ -96,25 +105,29 @@ export default class Todos extends Component {
   };
 
   getTodoId = e => {
-    console.log(e.target.id);
+    // console.log(e.target.name);
     this.setState({ taskId: e.target.id });
+    var checkboxes = document.getElementsByName("check");
+    checkboxes.forEach(item => {
+      // console.log(item);
+      if (item.id !== e.target.id) item.checked = false;
+    });
   };
 
-  traineeTasks = async e => {
-    let response = {};
-    await axios
-      .get(`http://localhost:4000/api/userTasks/${e.target.value}`)
-      .then(res => {
-        console.log(res.data)
-        response = res.data;
-      })
-      .catch(err => console.log(err));
-    return (
-      <div>
-        asdasdas
-        </div>
-    )
-  };
+  // statusHandleChange = e => {
+  //   // console.log(e.target);
+  //   this.state.traineeData.forEach(obj => {
+  //     if (obj.id === e.target.value[0]) {
+  //       this.state.traineeData.forEach(obj => {
+  //         return obj.task.map(data => {
+  //           return(
+  //             <h4>{data}</h4>
+  //           )
+  //         })
+  //       })
+  //     }
+  //   })
+  // };
 
   render() {
     const todos = this.state.todos;
@@ -138,6 +151,7 @@ export default class Todos extends Component {
                     <input
                       type="checkbox"
                       id={todo["_id"]}
+                      name="check"
                       onClick={this.getTodoId}
                     />
                     <span>{todo.task}</span>
@@ -158,8 +172,8 @@ export default class Todos extends Component {
         );
       })
     ) : (
-        <p>No tasks yet</p>
-      );
+      <p>No tasks yet</p>
+    );
 
     return (
       <div className="container">
@@ -202,6 +216,24 @@ export default class Todos extends Component {
           >
             Assign
           </a>
+        </div>
+        <div
+          className="card white-grey card-panel hoverable"
+          style={{ width: "100%" }}
+        >
+          <h6 className="card-title" style={{ marginBottom: "40px" }}>
+            List of Trainees
+          </h6>
+          {/* {this.state.traineeData.map(trainee => {
+            return (
+              <div>
+                <div className="left-align">
+                  <span>{trainee.name}</span>
+                </div>
+              </div>
+            );
+          })} */}
+          <DraggableDialog data={this.state.options} />
         </div>
       </div>
     );

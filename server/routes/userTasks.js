@@ -117,7 +117,7 @@ router.put(
     if (userObj.userType !== "MENTOR") {
       res.status(403).json({ errorMsg: "Not authorized" });
     } else {
-      Task.findOne({ _id: req.body.taskId }).then(task => {
+      Task.findOne({ _id: req.params.taskId }).then(task => {
         const newTask = {
           task: task.task,
           dueDate: task.dueDate,
@@ -125,7 +125,7 @@ router.put(
           assignedBy: userObj.name,
           id: mongoose.Types.ObjectId()
         };
-        User.findOne({ _id: req.body.traineeId }).then(trainee => {
+        User.findOne({ _id: req.params.traineeId }).then(trainee => {
           const newTasks = trainee.tasks.concat(newTask);
           trainee.tasks = newTasks;
           trainee
