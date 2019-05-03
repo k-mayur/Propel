@@ -42,7 +42,7 @@ export default class Todos extends Component {
     axios
       .post("http://localhost:4000/api/tasks/add", todo)
       .then(res => {
-        const data = res.data;
+        const data = res.data.task;
         // const newTodo = {
         //   task: data.task,
         //   createdBy: data.createdBy,
@@ -72,7 +72,6 @@ export default class Todos extends Component {
     this.setState({ options: e.target.value });
     // console.log(e.target.value);
   };
-
 
   render() {
     const todos = this.state.todos;
@@ -118,9 +117,7 @@ export default class Todos extends Component {
       <div>
         <div className="todo-app container">
           <AddTask addTodo={this.addTodo} />
-          <h1 className="center blue-text">
-            List of Tasks
-          </h1>
+          <h1 className="center blue-text">List of Tasks</h1>
           <div className=" card-content">{todoList}</div>
         </div>
       </div>
