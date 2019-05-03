@@ -90,7 +90,7 @@ router.put(
 
 // delete task
 router.delete(
-  "/:id",
+  "/delete/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
