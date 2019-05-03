@@ -41,6 +41,14 @@ export default class Todos extends Component {
           });
         });
 
+        const trainee = res.data.users.map(user => {
+          return {
+            id: user["_id"],
+            task: user.tasks.map(task => task.task),
+            status: user.tasks.map(task => task.status),
+          };
+        });
+
         console.log(status);
       });
   };
@@ -181,7 +189,7 @@ export default class Todos extends Component {
             Assign
           </a>
         </div>
-        <div
+        {/* <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
         >
@@ -200,7 +208,7 @@ export default class Todos extends Component {
               return <MenuItem value={option.id}>{option.name}</MenuItem>;
             })}
           </Select>
-        </div>
+        </div> */}
       </div>
     );
   }
