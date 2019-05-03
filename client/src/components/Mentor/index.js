@@ -15,7 +15,7 @@ import AddTask from "./addTaskForm";
 export default class Todos extends Component {
   state = {
     todos: [],
-    trainees: [],
+    trainees: []
   };
 
   componentDidMount = () => {
@@ -36,7 +36,7 @@ export default class Todos extends Component {
     axios
       .post("http://localhost:4000/api/tasks/add", todo)
       .then(res => {
-        const data = res.data;
+        const data = res.data.task;
         // const newTodo = {
         //   task: data.task,
         //   createdBy: data.createdBy,
@@ -58,7 +58,7 @@ export default class Todos extends Component {
         return (
           <div
             className="collection-item todoItem "
-            style={{margin: "50px"}}
+            style={{ margin: "50px" }}
             key={todo.id}
           >
             <span

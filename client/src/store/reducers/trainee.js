@@ -1,15 +1,15 @@
 import { FETCH_TASKS, UPDATE_TASKS, ADD_TASKS, DELETE_TASKS} from "../actions/actionTypes";
 
 const initialState = {
-    tasks:[]
+  tasks: []
 };
 export default function (state = initialState, action) {
     switch (action.type) {
         case FETCH_TASKS:
-        let target = Object.assign([], action.payload.data)
+        let tasks = Object.assign([], action.payload.tasks)
             return {
                 ...state,
-                tasks: target
+                tasks: tasks
             };
         case UPDATE_TASKS:
             let updatedTasks = Object.assign([], action.payload)
@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
             }
         case DELETE_TASKS:
             let deleteTask = Object.assign([], state.tasks);
-            deleteTask = deleteTask.filter(ele=> ele.id!==action.payload.taskId);
+            deleteTask = deleteTask.filter(ele=> ele.id!==action.payload);
             return {
                 ...state,
                 tasks:deleteTask
@@ -34,4 +34,3 @@ export default function (state = initialState, action) {
             return state;
     }
 }
-

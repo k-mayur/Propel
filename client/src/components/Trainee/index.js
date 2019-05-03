@@ -54,17 +54,16 @@ const styles = theme=>({
 })
 class DndTest extends Component {
     changeStatus = (taskId, status) => {
-        this.props.updateTasks({ taskId: taskId, status: status, traineeId: this.props.user.id })
+        this.props.updateTasks({ taskId: taskId, status: status })
     }
 
     addNewTask =(task,dueDate) =>{
-        let trainee = this.props.user.name;
-        this.props.addTasks({ task, dueDate, trainee })
+        this.props.addTasks({ task, dueDate})
     }
     deleteTask=(e)=>{
         if(e.target.id!=="")this.props.deleteTask({taskId:e.target.id,traineeId:this.props.user.id})
         else {
-            this.props.deleteTask({taskId:e.target.parentNode.id, traineeId:this.props.user.id})
+            this.props.deleteTask(e.target.parentNode.id)
         }
     }
     componentDidMount = () => {

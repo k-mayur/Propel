@@ -85,23 +85,26 @@ PropelMeAhead is a web application for propel school management.
 
 - res
   - ```json
-    [{ taskObjects }]
+    {
+      taskObjects,
+      errorMsg
+    }
     ```
 
 #### Add Tasks
 
 ##### /api/tasks/add POST
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | task      |      Yes | string |
-  | createdBy |      Yes | string |
-  | dueDate   |      Yes |   date |
+- | Field   | Required |   Type |
+  | :------ | -------: | -----: |
+  | task    |      Yes | string |
+  | dueDate |      Yes |   date |
 
 - res
   - ```json
     {
-      taskObject
+      taskObject,
+      errorMsg
     }
     ```
 
@@ -123,7 +126,7 @@ PropelMeAhead is a web application for propel school management.
 
 #### Delete Tasks
 
-##### /api/tasks/:id DELETE
+##### /api/tasks/delete/:id DELETE
 
 - res
   - ```json
@@ -134,42 +137,43 @@ PropelMeAhead is a web application for propel school management.
 
 #### Get Tasks of a trainee
 
-##### /api/userTasks GET
+##### /api/userTasks/:id GET
 
 - res
   - ```json
-    [{ taskObjects }]
+    {
+      taskObjects,
+      errorMsg
+    }
     ```
 
 #### Get Trainees
 
-##### /api/userTasks/trainee GET
-
-- | Field    | Required |   Type |
-  | :------- | -------: | -----: |
-  | userType |      Yes | string |
+##### /api/userTasks/users/trainee GET
 
 - res
   - ```json
-    [{ traineeObjects }]
+    {
+      traineeObjects,
+      errorMsg
+    }
     ```
 
 #### Get Mentors
 
-##### /api/userTasks/mentor GET
-
-- | Field    | Required |   Type |
-  | :------- | -------: | -----: |
-  | userType |      Yes | string |
+##### /api/userTasks/users/mentor GET
 
 - res
   - ```json
-    [{ mentorObjects }]
+    {
+      mentorObjects,
+      errorMsg
+    }
     ```
 
 #### Assign Task to a trainee
 
-##### /api/userTasks/assign PUT
+##### /api/userTasks/task/assign PUT
 
 - | Field     | Required |   Type |
   | :-------- | -------: | -----: |
@@ -179,33 +183,49 @@ PropelMeAhead is a web application for propel school management.
 - res
   - ```json
     {
-      traineeObject
+      traineeObject,
+      errorMsg
+    }
+    ```
+
+#### Assign Task to a trainee by self
+
+##### /api/userTasks/task/assignme PUT
+
+- | Field   | Required |   Type |
+  | :------ | -------: | -----: |
+  | task    |      Yes | string |
+  | dueDate |      Yes |   date |
+
+- res
+  - ```json
+    {
+      traineeObject,
+      errorMsg
     }
     ```
 
 #### Update trainee's Task status (CWO, NYS, COM)
 
-##### /api/userTasks/update PUT
+##### /api/userTasks/task/update PUT
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | taskId    |      Yes | string |
-  | status    |      Yes | string |
+- | Field  | Required |   Type |
+  | :----- | -------: | -----: |
+  | taskId |      Yes | string |
+  | status |      Yes | string |
 
 - res
   - ```json
     {
-      traineeObject
+      traineeObject,
+      errorMsg
     }
     ```
 
 #### Delete trainee Task
 
-##### /api/userTasks/delete PUT
+##### /api/userTasks/delete/:id PUT
 
-- | Field     | Required |   Type |
-  | :-------- | -------: | -----: |
-  | taskId    |      Yes | string |
 
 - res
   - ```json

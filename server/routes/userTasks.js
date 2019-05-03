@@ -4,8 +4,6 @@ var passport = require("passport");
 const router = express.Router();
 const jwt_decode = require("jwt-decode");
 
-// Load input validation
-const validateUserTaskInput = require("../validation/userTasks");
 // load task model
 require("../models/Task");
 require("../models/User");
@@ -19,63 +17,129 @@ router.get(
   (req, res) => {
     User.findOne({ _id: req.params.id })
       .then(user => {
-        res.status(200).json(user.tasks);
+        if (!user) {
+          res.status(204).json({
+            errorMsg: "Not Found"
+          });
+        }
+        res.status(200).json({
+          tasks: user.tasks,
+          errorMsg: null
+        });
       })
-      .catch(err => console.log(err));
+      .catch(err => res.status(500).json({ errorMsg: err.message }));
   }
 );
 
 // get trainees
 router.get(
-  "/trainee",
+  "/users/trainee",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.find({ userType: "TRAINEE" })
-      .then(users => {
-        res.status(200).json(users);
-      })
-      .catch(err => console.log(err));
+    const userObj = jwt_decode(req.headers.authorization);
+    if (userObj.userType !== "MENTOR") {
+      res.status(403).json({ errorMsg: "Not authorized" });
+    } else {
+      User.find({ userType: "TRAINEE" })
+        .then(users => {
+          res.status(200).json({
+            users: users,
+            errorMsg: null
+          });
+        })
+        .catch(err => {
+          res.status(500).json({ errorMsg: err.message });
+        });
+    }
   }
 );
 
 // get mentors
 router.get(
-  "/mentor",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    User.find({ userType: "MENTOR" })
-      .then(users => {
-        res.status(200).json(users);
-      })
-      .catch(err => console.log(err));
-  }
-);
-
-// assign task
-router.put(
-  "/assign",
+  "/users/mentor",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
-    Task.findOne({ _id: req.body.taskId }).then(task => {
+    if (userObj.userType !== "MENTOR") {
+      res.status(403).json({ errorMsg: "Not authorized" });
+    } else {
+      User.find({ userType: "MENTOR" })
+        .then(users => {
+          res.status(200).json({
+            users: users,
+            errorMsg: null
+          });
+        })
+        .catch(err => res.status(500).json({ errorMsg: err.message }));
+    }
+  }
+);
+
+// assign task by self
+router.put(
+  "/task/assignme",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
+    if (userObj.userType !== "TRAINEE") {
+      res.status(403).json({ errorMsg: "Not authorized" });
+    } else {
       const newTask = {
-        task: task.task,
-        dueDate: task.dueDate,
+        task: req.body.task,
+        dueDate: req.body.dueDate,
         status: "NYS",
         assignedBy: userObj.name,
         id: mongoose.Types.ObjectId()
       };
-      User.findOne({ _id: req.body.traineeId }).then(trainee => {
+      User.findOne({ _id: userObj.id }).then(trainee => {
         const newTasks = trainee.tasks.concat(newTask);
         trainee.tasks = newTasks;
         trainee
           .save()
           .then(trainee => {
-            res.status(200).json(trainee);
+            res.status(200).json({
+              trainee: trainee,
+              errorMsg: null
+            });
           })
-          .catch(err => console.log(err));
+          .catch(err => res.status(500).json({ errorMsg: err.message }));
       });
-    });
+    }
+  }
+);
+
+// assign task by mentor
+router.put(
+  "/task/assign",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
+    if (userObj.userType !== "MENTOR") {
+      res.status(403).json({ errorMsg: "Not authorized" });
+    } else {
+      Task.findOne({ _id: req.body.taskId }).then(task => {
+        const newTask = {
+          task: task.task,
+          dueDate: task.dueDate,
+          status: "NYS",
+          assignedBy: userObj.name,
+          id: mongoose.Types.ObjectId()
+        };
+        User.findOne({ _id: req.body.traineeId }).then(trainee => {
+          const newTasks = trainee.tasks.concat(newTask);
+          trainee.tasks = newTasks;
+          trainee
+            .save()
+            .then(trainee => {
+              res.status(200).json({
+                trainee: trainee,
+                errorMsg: null
+              });
+            })
+            .catch(err => res.status(500).json({ errorMsg: err.message }));
+        });
+      });
+    }
   }
 );
 
@@ -105,7 +169,7 @@ router.post("/add", passport.authenticate("jwt", { session: false }),
 
 // update user task
 router.put(
-  "/update",
+  "/task/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
@@ -124,20 +188,23 @@ router.put(
         }
       });
       user.tasks = updatedTasks;
-      user.markModified('tasks');
+      user.markModified("tasks");
       user
         .save()
         .then(user => {
-          res.status(200).json(user);
+          res.status(200).json({
+            user: user,
+            errorMsg: null
+          });
         })
-        .catch(err => console.log(err));
+        .catch(err => res.status(500).json({ errorMsg: err.message }));
     });
   }
 );
 
 // delete user task
 router.put(
-  "/delete",
+  "/delete/:taskId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
@@ -147,7 +214,7 @@ router.put(
       const updatedTasks = newTasks
         .map(task => {
           if (task !== null) {
-            if (task.id == req.body.taskId) {
+            if (task.id == req.params.taskId) {
               return;
             } else {
               return task;
@@ -166,7 +233,7 @@ router.put(
         .then(() => {
           res.status(200).json({ msg: "deleted" });
         })
-        .catch(err => console.log(err));
+        .catch(err => res.status(500).json({ errorMsg: err.message }));
     });
   }
 );
