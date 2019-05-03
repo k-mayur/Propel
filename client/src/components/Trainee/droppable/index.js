@@ -8,7 +8,6 @@ let status = ''
 class Droppable extends Component {
   drop = (e) => {
     e.preventDefault();
-    // console.log(e.target)
     if (e.target.classList.contains('MuiTypography-root-44')) {
       taskId = draggedItemId; 
       status = e.target.parentNode.id;

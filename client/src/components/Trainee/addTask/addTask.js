@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default class FormDialog extends React.Component {
     state = {
         input: '',
-        date: '',
+        date: '2019-05-03T10:30',
         open: false,
     };
 
@@ -47,7 +47,7 @@ export default class FormDialog extends React.Component {
                     <DialogTitle id="form-dialog-title">Add New Task</DialogTitle>
                     <DialogContent>
                         <textarea onChange={this.inputChange} placeholder="add text Drag down if needed"/>
-                        <input onChange={this.dateChange} style={{ width: '200px' }} id="datetime-local" type="datetime-local" defaultValue="2019-05-03T10:30"/>
+                        <input onChange={this.dateChange} style={{ width: '200px' }} id="datetime-local" type="datetime-local" defaultValue={this.state.date}/>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
