@@ -103,8 +103,13 @@ export default class Todos extends Component {
   };
 
   getTodoId = e => {
-    console.log(e.target.id);
+    // console.log(e.target.name);
     this.setState({ taskId: e.target.id });
+    var checkboxes = document.getElementsByName("check");
+    checkboxes.forEach(item => {
+      // console.log(item);
+      if (item.id !== e.target.id) item.checked = false;
+    });
   };
 
   // statusHandleChange = e => {
@@ -144,6 +149,7 @@ export default class Todos extends Component {
                     <input
                       type="checkbox"
                       id={todo["_id"]}
+                      name="check"
                       onClick={this.getTodoId}
                     />
                     <span>{todo.task}</span>
