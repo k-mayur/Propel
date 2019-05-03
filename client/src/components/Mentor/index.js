@@ -81,8 +81,12 @@ export default class Todos extends Component {
       todos.map(todo => {
         return (
           <div
-            className="collection-item todoItem "
-            style={{ margin: "50px" }}
+            className="left-align"
+            style={{
+              margin: "50px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
             key={todo.id}
           >
             <span
@@ -90,22 +94,31 @@ export default class Todos extends Component {
                 this.deleteTodo(todo["_id"]);
               }}
             >
-              <h4 class="z-depth-5">{todo.task}</h4>
+              <h5
+                style={{
+                  borderBottom: "1px solid #8080803b",
+                  fontWeight: "100",
+                }}
+              >
+                {todo.task}
+              </h5>
             </span>
-            <span style={{ marginTop: "20px", marginRight: "2rem" }}>
-              assign to:{" "}
-            </span>
+            <span>
+              <span style={{ fontWeight: "100", marginRight: "1rem" }}>
+                assign to:{" "}
+              </span>
 
-            <Select
-              multiple
-              value={this.state.options}
-              onChange={this.handleChange}
-              input={<Input id="select-multiple" />}
-            >
-              {this.options.map(option => {
-                return <MenuItem value={option}>{option}</MenuItem>;
-              })}
-            </Select>
+              <Select
+                multiple
+                value={this.state.options}
+                onChange={this.handleChange}
+                input={<Input id="select-multiple" />}
+              >
+                {this.options.map(option => {
+                  return <MenuItem value={option}>{option}</MenuItem>;
+                })}
+              </Select>
+            </span>
           </div>
         );
       })
@@ -114,11 +127,26 @@ export default class Todos extends Component {
     );
 
     return (
-      <div>
-        <div className="todo-app container">
-          <AddTask addTodo={this.addTodo} />
-          <h1 className="center blue-text">List of Tasks</h1>
-          <div className=" card-content">{todoList}</div>
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          position: "absolute",
+          top: "5rem",
+          left: "20rem",
+        }}
+      >
+        <div
+          className="card white-grey card-panel hoverable"
+          style={{ width: "100%" }}
+        >
+          <div class="black-text">
+            <h3 className="card-title">Create Task</h3>
+            <AddTask addTodo={this.addTodo} />
+            <h6 className="card-title">List of Tasks</h6>
+            <span>{todoList}</span>
+            <h6 className="card-title">List of Trainees</h6>
+          </div>
         </div>
       </div>
     );

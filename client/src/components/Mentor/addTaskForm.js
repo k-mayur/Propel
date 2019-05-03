@@ -36,28 +36,7 @@ export default class AddTaskForm extends Component {
   render() {
     return (
       <div class="row">
-        {/* <form onSubmit={this.handleSubmit}>
-          <label>Add new task:</label>
-          <input
-            type="text"
-            onChange={this.handleContentChange}
-            value={this.state.content}
-          />
-          <label>Created By:</label>
-          <input
-            type="text"
-            onChange={this.handleCreatedChange}
-            value={this.state.content}
-          />
-          <label>Due date:</label>
-          <input
-            type="text"
-            onChange={this.handleDateChange}
-            value={this.state.content}
-            className = "datepicker"
-          />
-        </form> */}
-        <form className="col s12">
+        <form className="col s12 white-text">
           <div className="row">
             <div className="input-field col s6">
               <input
@@ -69,7 +48,7 @@ export default class AddTaskForm extends Component {
               />
               <label for="add_task">Add task:</label>
             </div>
-            <div className="input-field col s6">
+            {/* <div className="input-field col s6">
               <input
                 id="created_by"
                 type="text"
@@ -78,26 +57,28 @@ export default class AddTaskForm extends Component {
                 value={this.state.createdBy}
               />
               <label for="created_by">Created by:</label>
-            </div>
+            </div> */}
             <div className="input-field col s6">
               <input
                 type="date"
                 class="datepicker"
+                z-depth-5
                 onChange={this.handleDateChange}
                 value={this.state.dueDate}
               />
               <label for="due_Date">Due date:</label>
+              <div className="input-field col s6">
+                <button
+                  class="btn waves-effect waves-light btn-small"
+                  type="submit"
+                  name="action"
+                  onClick={this.handleSubmit}
+                >
+                  Create
+                </button>
+              </div>
             </div>
           </div>
-          <button
-            class="btn waves-effect waves-light btn-small"
-            type="submit"
-            name="action"
-            onClick={this.handleSubmit}
-          >
-            Submit
-            <i class="material-icons right">send</i>
-          </button>
         </form>
       </div>
     );
