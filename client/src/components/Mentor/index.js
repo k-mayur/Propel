@@ -10,7 +10,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import EnhancedTable from './trainees'
-import DraggableDialog from './traineeTasks'
+import FullScreenDialog from './traineeTasks'
 
 export default class Todos extends Component {
   state = {
@@ -37,7 +37,6 @@ export default class Todos extends Component {
         });
         // console.log(trainees);
         this.setState({ options: [...trainees] });
-        console.log(this.state.options);
         const status = res.data.users.map(user => {
           return user.tasks.map(task => {
             return { task: task.task, status: task.status };
@@ -51,8 +50,6 @@ export default class Todos extends Component {
             status: user.tasks.map(task => task.status),
           };
         });
-
-        console.log(status);
       });
   };
 
@@ -167,7 +164,7 @@ export default class Todos extends Component {
     return (
       <div className="container">
         {/* <EnhancedTable/> */}
-        <DraggableDialog  data={this.state.options}/>
+        <FullScreenDialog  data={this.state.options}/>
         <div
           className="card white-grey card-panel hoverable"
           style={{ width: "100%" }}
@@ -205,19 +202,6 @@ export default class Todos extends Component {
           >
             Assign
           </a>
-        </div>
-        <div
-          className="card white-grey card-panel hoverable"
-          style={{ width: "100%" }}
-        >
-          <h6 className="card-title" style={{ marginBottom: "40px" }}>
-            List of Trainees
-          </h6>
-          <Select onChange={this.traineeTasks}>
-            {this.state.options.map(option => {
-              return <MenuItem value={option.id}>{option.name}</MenuItem>;
-            })}
-          </Select>
         </div>
       </div>
     );
