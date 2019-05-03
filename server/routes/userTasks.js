@@ -32,7 +32,6 @@ router.get(
   (req, res) => {
     User.find({ userType: "TRAINEE" })
       .then(users => {
-        console.log("sadsad");
         res.status(200).json(users);
       })
       .catch(err => console.log(err));
@@ -63,7 +62,7 @@ router.put(
         task: task.task,
         dueDate: task.dueDate,
         status: "NYS",
-        assignedBy: userObj.id,
+        assignedBy: userObj.name,
         id: mongoose.Types.ObjectId()
       };
       User.findOne({ _id: req.body.traineeId }).then(trainee => {
@@ -79,6 +78,30 @@ router.put(
     });
   }
 );
+
+// add tasks by trainee
+router.post("/add", passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
+    User.findOne({ _id: userObj.id })
+      .then(user => {
+        let newTask = {
+          task: req.body.task,
+          assignedBy: req.body.trainee,
+          dueDate: new Date(req.body.dueDate),
+          status: "NYS",
+          id: mongoose.Types.ObjectId()
+        }
+        user.tasks.push(newTask);
+        user.markModified('tasks');
+        user
+          .save()
+          .then(user => res.status(200).json(user))
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  }
+)
 
 // update user task
 router.put(
