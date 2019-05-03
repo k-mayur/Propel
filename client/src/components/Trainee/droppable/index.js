@@ -12,18 +12,32 @@ class Droppable extends Component {
     if (e.target.classList.contains('MuiTypography-root-44')) {
       taskId = draggedItemId; 
       status = e.target.parentNode.id;
-      return this.props.changeStatus(taskId, status)
     }
     if (e.target.classList.contains('item')) {
       taskId = draggedItemId; 
       status = e.target.parentNode.parentNode.id;
-      return this.props.changeStatus(taskId, status)
     }
     if (e.target.id === 'NYS' || e.target.id === 'CWO' || e.target.id === 'COM') {
       taskId = draggedItemId;
       status = e.target.id;
     }
-    return this.props.changeStatus(taskId, status)
+    if (e.target.classList.contains('mentor') || e.target.classList.contains('user')){
+      taskId = draggedItemId;
+      status=e.target.parentNode.parentNode.parentNode.id;
+    }
+    if(e.target.classList.contains('userDiv')){
+      taskId = draggedItemId;
+      status = e.target.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    if (e.target.classList.contains('MuiButton-label-110')) {
+      taskId = draggedItemId;
+      status = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+    }
+    if(e.target.classList.contains('select')){
+      taskId = draggedItemId;
+      status = e.target.parentNode.parentNode.parentNode.id;
+    }
+    if (status !== '') return this.props.changeStatus(taskId, status)
   }
 
   allowDrop = (e) => {
