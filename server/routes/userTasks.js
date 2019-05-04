@@ -19,12 +19,12 @@ router.get(
       .then(user => {
         if (!user) {
           res.status(204).json({
-            errorMsg: "Not Found"
+            errorMsg: "Not Found",
           });
         }
         res.status(200).json({
           tasks: user.tasks,
-          errorMsg: null
+          errorMsg: null,
         });
       })
       .catch(err => res.status(500).json({ errorMsg: err.message }));
@@ -44,7 +44,7 @@ router.get(
         .then(users => {
           res.status(200).json({
             users: users,
-            errorMsg: null
+            errorMsg: null,
           });
         })
         .catch(err => {
@@ -67,7 +67,7 @@ router.get(
         .then(users => {
           res.status(200).json({
             users: users,
-            errorMsg: null
+            errorMsg: null,
           });
         })
         .catch(err => res.status(500).json({ errorMsg: err.message }));
@@ -89,7 +89,7 @@ router.put(
         dueDate: req.body.dueDate,
         status: "NYS",
         assignedBy: userObj.name,
-        id: mongoose.Types.ObjectId()
+        id: mongoose.Types.ObjectId(),
       };
       User.findOne({ _id: userObj.id }).then(trainee => {
         const newTasks = trainee.tasks.concat(newTask);
@@ -99,7 +99,7 @@ router.put(
           .then(trainee => {
             res.status(200).json({
               trainee: trainee,
-              errorMsg: null
+              errorMsg: null,
             });
           })
           .catch(err => res.status(500).json({ errorMsg: err.message }));
@@ -117,15 +117,15 @@ router.put(
     if (userObj.userType !== "MENTOR") {
       res.status(403).json({ errorMsg: "Not authorized" });
     } else {
-      Task.findOne({ _id: req.params.taskId }).then(task => {
+      Task.findOne({ _id: req.body.taskId }).then(task => {
         const newTask = {
           task: task.task,
           dueDate: task.dueDate,
           status: "NYS",
           assignedBy: userObj.name,
-          id: mongoose.Types.ObjectId()
+          id: mongoose.Types.ObjectId(),
         };
-        User.findOne({ _id: req.params.traineeId }).then(trainee => {
+        User.findOne({ _id: req.body.traineeId }).then(trainee => {
           const newTasks = trainee.tasks.concat(newTask);
           trainee.tasks = newTasks;
           trainee
@@ -133,7 +133,7 @@ router.put(
             .then(trainee => {
               res.status(200).json({
                 trainee: trainee,
-                errorMsg: null
+                errorMsg: null,
               });
             })
             .catch(err => res.status(500).json({ errorMsg: err.message }));
@@ -144,7 +144,9 @@ router.put(
 );
 
 // add tasks by trainee
-router.post("/add", passport.authenticate("jwt", { session: false }),
+router.post(
+  "/add",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
     User.findOne({ _id: userObj.id })
@@ -154,10 +156,10 @@ router.post("/add", passport.authenticate("jwt", { session: false }),
           assignedBy: req.body.trainee,
           dueDate: new Date(req.body.dueDate),
           status: "NYS",
-          id: mongoose.Types.ObjectId()
-        }
+          id: mongoose.Types.ObjectId(),
+        };
         user.tasks.push(newTask);
-        user.markModified('tasks');
+        user.markModified("tasks");
         user
           .save()
           .then(user => res.status(200).json(user))
@@ -165,7 +167,7 @@ router.post("/add", passport.authenticate("jwt", { session: false }),
       })
       .catch(err => console.log(err));
   }
-)
+);
 
 // update user task
 router.put(
@@ -174,7 +176,7 @@ router.put(
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
     User.findOne({
-      _id: userObj.id
+      _id: userObj.id,
     }).then(user => {
       const newTasks = Object.assign([], user.tasks);
       const updatedTasks = newTasks.map(task => {
@@ -194,7 +196,7 @@ router.put(
         .then(user => {
           res.status(200).json({
             user: user,
-            errorMsg: null
+            errorMsg: null,
           });
         })
         .catch(err => res.status(500).json({ errorMsg: err.message }));

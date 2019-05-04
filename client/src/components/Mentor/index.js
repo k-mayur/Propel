@@ -9,7 +9,7 @@ import AddTask from "./addTaskForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
-import EnhancedTable from "./trainees";
+// import EnhancedTable from "./trainees";
 import DraggableDialog from "./traineeTasks";
 
 export default class Todos extends Component {
@@ -89,6 +89,7 @@ export default class Todos extends Component {
   };
 
   assignTask = () => {
+    var count = 0;
     this.state.trainees.forEach(trainee => {
       axios
         .put("http://localhost:4000/api/userTasks/task/assign", {
@@ -96,10 +97,14 @@ export default class Todos extends Component {
           traineeId: trainee,
         })
         .then(res => {
-          alert("task assigned");
+          // alert("task assigned");
+          count++;
         })
         .catch(err => alert("error"));
     });
+    if (count > 0) {
+      alert("task assigned");
+    }
   };
 
   getTodoId = e => {
