@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-
 import Select from "@material-ui/core/Select";
 import FormControl from '@material-ui/core/FormControl';
 import axios from "axios";
@@ -97,7 +96,7 @@ class FullScreenDialog extends React.Component {
 
     deleteTask = (taskId) => {
         axios
-            .put(`http://localhost:4000/api/userTasks/delete/${{ taskId: taskId, traineeId: this.state.traineeid }}`)
+            .put(`http://localhost:4000/api/userTasks/mentor/delete`, { taskId: taskId, traineeId: this.state.traineeid })
             .then(res => {
                 let deleteData = this.state.data.filter(ele => ele.id !== taskId)
                 this.setState({data:deleteData})
@@ -136,7 +135,7 @@ class FullScreenDialog extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <form className="select" autoComplete="off">
+                <form className="select" autoComplete="off" style={{marginTop:'2em',marginBottom:'2em',width:'350px'}}>
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="demo-controlled-open-select">Check Trainee Status</InputLabel>
                         <Select
@@ -144,7 +143,7 @@ class FullScreenDialog extends React.Component {
                             inputProps={{
                                 id: 'demo-controlled-open-select',
                             }}
-                            style={{width:"250px"}}
+                            style={{width:"300px"}}
                         >
                             {this.props.data.map(ele => <MenuItem value={[ele.id, ele.name]}>{ele.name}</MenuItem>)}
                         </Select>
