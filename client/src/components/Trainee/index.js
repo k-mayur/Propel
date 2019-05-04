@@ -9,7 +9,7 @@ import { fetchTasks, updateTasks, addTasks, deleteTask } from '../../store/actio
 import PropTypes from 'prop-types';
 import FormDialog from './addTask/addTask'
 import Button from '@material-ui/core/Button';
-import ControlledOpenSelect from './select.js/Select'
+import moment from 'moment';
 
 const Item = styled.div`
   padding: 8px;
@@ -32,7 +32,6 @@ const droppableStyle = {
     width: "30%",
     backgroundColor: '#D3D3D3',
     borderRadius: "5px",
-    alignSelf: "flex-start",
     minHeight: '250px'
 }
 const styles = theme=>({
@@ -73,7 +72,7 @@ class DndTest extends Component {
         if(this.props.user.name===task.assignedBy)
             return (
                 <div className="user" style={{display:'flex',justifyContent:'space-between'}}>
-                    <div className="userDiv" style={{ fontWeight: 'bold' }}>-assigned by own</div>
+                    <div className="userDiv" style={{ fontWeight: 'bold' }}>Assigned by own</div>
                     <Button id={task.id} className="userDiv" onClick={this.deleteTask} aria-label="Delete">
                         del
                     </Button>
@@ -81,7 +80,7 @@ class DndTest extends Component {
         )
         else {
             return (
-                <div className="mentor" style={{fontWeight:'bold'}}>-assigned by {task.assignedBy.toLowerCase()}</div>
+                <div className="mentor" style={{fontWeight:'bold'}}>Assigned by {task.assignedBy.toLowerCase()}</div>
             )
         }
     }
@@ -100,7 +99,6 @@ class DndTest extends Component {
                         {ele.task}
                         <br />
                         <br />
-                        <ControlledOpenSelect changeStatus={this.changeStatus} status={ele.status} id={ele.id}/>
                         {this.deleteButton(ele)}
                     </Item>
                 </Draggable>)}
@@ -112,7 +110,7 @@ class DndTest extends Component {
         const { classes } = this.props;
         let tasks = this.props.tasks;
         return (
-            <div>
+            <div style={{margin:'30px'}}>
                 
                 <div style={{ margin: "30px" }} >
                     <FormDialog addNewTask={this.addNewTask} />
