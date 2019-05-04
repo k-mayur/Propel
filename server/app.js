@@ -9,7 +9,7 @@ const multer = require("multer");
 const jwt_decode = require("jwt-decode");
 
 const storage = multer.diskStorage({
-  destination: "./public/uploads/",
+  destination: "../public/uploads/",
   filename: function(req, file, cb) {
     const userObj = jwt_decode(req.headers.authorization);
     cb(null, file.fieldname + "-" + userObj.id + `.jpeg`);
@@ -60,11 +60,16 @@ mongoose
 
 //cors middleware
 app.use(cors());
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 // body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static("./public"));
+app.use(express.static("../public"));
 
 // passport middleware must be put after express session middleware
 app.use(passport.initialize());
@@ -86,14 +91,19 @@ app.use("/api/userTasks", userTasks);
 
 app.post("/api/upload", function(req, res) {
   upload(req, res, err => {
-    if (err) {
-      res.status(402).json({ errorMsg: err.message });
+    console.log(req.file, "here");
+    if (req.file == undefined) {
+      res.status(404).json({ errorMsg: "no file selected" });
     } else {
-      console.log(req.file);
-      res.status(200).json({ msg: "uploaded img" });
+      if (err) {
+        res.status(402).json({ errorMsg: err.message });
+      } else {
+        res
+          .status(200)
+          .json({ msg: "uploaded img", file: `uploads/${req.file.filename}` });
+      }
     }
   });
-  //res.status(200).json({ msg: "uploaded img" });
 });
 
 const port = 4000;

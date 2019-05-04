@@ -25,9 +25,10 @@ function MediaCard(props) {
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image="https://www.shareicon.net/data/512x512/2016/05/26/771204_man_512x512.png"
+        image="http://localhost:5500/uploads/profileImg-5cc84fd874fda657ee85993a.jpeg"
         title="User"
       />
+
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.name}
