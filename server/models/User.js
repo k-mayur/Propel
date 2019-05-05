@@ -30,6 +30,10 @@ const UserSchema = new Schema({
   tasks: {
     type: Array,
     default: []
+  },
+  about: {
+    type: String,
+    default: "I'm a User."
   }
 });
 

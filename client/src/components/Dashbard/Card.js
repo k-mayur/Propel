@@ -14,7 +14,7 @@ const styles = {
     width: "30vw",
     maxWidth: 600,
     textAlign: "center",
-    margin: 5
+    marginLeft: "7%"
   },
   media: {
     height: "30vw",

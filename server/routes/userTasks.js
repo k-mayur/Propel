@@ -144,7 +144,9 @@ router.put(
 );
 
 // add tasks by trainee
-router.post("/add", passport.authenticate("jwt", { session: false }),
+router.post(
+  "/add",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userObj = jwt_decode(req.headers.authorization);
     User.findOne({ _id: userObj.id })
@@ -155,9 +157,9 @@ router.post("/add", passport.authenticate("jwt", { session: false }),
           dueDate: new Date(req.body.dueDate),
           status: "NYS",
           id: mongoose.Types.ObjectId()
-        }
+        };
         user.tasks.push(newTask);
-        user.markModified('tasks');
+        user.markModified("tasks");
         user
           .save()
           .then(user => res.status(200).json(user))
@@ -165,7 +167,7 @@ router.post("/add", passport.authenticate("jwt", { session: false }),
       })
       .catch(err => console.log(err));
   }
-)
+);
 
 // update user task
 router.put(
@@ -266,6 +268,30 @@ router.put(
         .save()
         .then(() => {
           res.status(200).json({ msg: "deleted" });
+        })
+        .catch(err => res.status(500).json({ errorMsg: err.message }));
+    });
+  }
+);
+
+//edit user
+router.put(
+  "/user/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
+
+    User.findOne({
+      _id: userObj.id
+    }).then(user => {
+      // new values
+      user.name = req.body.name;
+      user.about = req.body.about;
+      user.updatedDate = Date.now;
+      user
+        .save()
+        .then(user => {
+          res.status(200).json(user);
         })
         .catch(err => res.status(500).json({ errorMsg: err.message }));
     });
