@@ -7,22 +7,6 @@ import Card from "./Card";
 import CardDetail from "./CardDetail";
 
 class Dashboard extends Component {
-  // state={
-  //   errors: {},
-  //   userType: ""
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.errors) {
-  //     this.setState({
-  //       errors: nextProps.errors
-  //     });
-  //   }
-  //   if (nextProps.userType) {
-  //     this.setState({userType:nextProps.userType})
-  //   }
-  // }
-
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
@@ -30,9 +14,16 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-      <div className={classes.wrap}>
-        <Card name={user.name} userType={user.userType} />
-        <CardDetail name={user.name} userType={user.userType} />
+      <div>
+        <div className={classes.wrap}>
+          <Card
+            name={user.name}
+            userType={user.userType}
+            id={user.id}
+            upload={this.uploadImage}
+          />
+          <CardDetail name={user.name} userType={user.userType} id={user.id} />
+        </div>
       </div>
     );
   }
