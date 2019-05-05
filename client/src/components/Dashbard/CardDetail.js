@@ -4,12 +4,14 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import moment from "moment";
+import Edit from "./Edit";
 
 const styles = {
   card: {
     width: "40vw",
     padding: 40,
-    margin: 5
+    marginRight: "7%"
   },
   title: {
     fontSize: 30,
@@ -32,6 +34,7 @@ function SimpleCard(props) {
 
   return (
     <Card className={classes.card}>
+      <Edit />
       <CardContent>
         <Typography
           className={classes.title}
@@ -63,13 +66,14 @@ function SimpleCard(props) {
           style={{ color: "#202020" }}
           gutterBottom
         >
-          I am a dedicated person with a family of four. I enjoy reading, and
-          the knowledge and perspective that my reading gives me has
-          strengthened my teaching skills and presentation abilities. I have
-          been successful at raising a family, and I attribute this success to
-          my ability to plan, schedule, and handle many different tasks at once.
-          This flexibility will help me in the classroom, where there are many
-          different personalities and learning styles.
+          {props.about}
+        </Typography>
+        <Typography
+          className={classes.text}
+          style={{ color: "#007bff", marginTop: "50px", textAlign: "right" }}
+          gutterBottom
+        >
+          Joined {moment(new Date(props.date)).fromNow()}
         </Typography>
       </CardContent>
     </Card>

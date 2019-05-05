@@ -22,7 +22,12 @@ class Dashboard extends Component {
             id={user.id}
             upload={this.uploadImage}
           />
-          <CardDetail name={user.name} userType={user.userType} id={user.id} />
+          <CardDetail
+            name={user.name}
+            userType={user.userType}
+            date={user.createDate}
+            about={user.about}
+          />
         </div>
       </div>
     );
