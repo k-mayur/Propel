@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Login from "./components/Login/Login";
 import Error from "./components/Error/Error";
 import Home from "./components/Home/Home";
@@ -14,8 +16,13 @@ import classes from "./App.css";
 
 class App extends React.Component {
   render() {
+    console.log(this.props.auth);
+    let classBg;
+    this.props.auth.isAuthenticated
+      ? (classBg = classes.wrap1)
+      : (classBg = classes.wrap);
     return (
-      <div className={classes.wrap}>
+      <div className={classBg}>
         <BrowserRouter>
           <Header />
           <Switch>
@@ -34,4 +41,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+Login.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.login
+});
+export default connect(mapStateToProps)(App);

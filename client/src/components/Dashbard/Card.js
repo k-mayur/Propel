@@ -15,7 +15,8 @@ const styles = {
   },
   media: {
     height: "30vw",
-    maxHeight: 600
+    maxHeight: 600,
+    borderRadius: "50%"
   }
 };
 

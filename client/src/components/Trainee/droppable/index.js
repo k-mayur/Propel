@@ -8,7 +8,6 @@ let status = ''
 class Droppable extends Component {
   drop = (e) => {
     e.preventDefault();
-    // console.log(e.target)
     if (e.target.classList.contains('MuiTypography-root-44')) {
       taskId = draggedItemId; 
       status = e.target.parentNode.id;
@@ -28,14 +27,6 @@ class Droppable extends Component {
     if(e.target.classList.contains('userDiv')){
       taskId = draggedItemId;
       status = e.target.parentNode.parentNode.parentNode.parentNode.id;
-    }
-    if (e.target.classList.contains('MuiButton-label-110')) {
-      taskId = draggedItemId;
-      status = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-    }
-    if(e.target.classList.contains('select')){
-      taskId = draggedItemId;
-      status = e.target.parentNode.parentNode.parentNode.id;
     }
     if (status !== '') return this.props.changeStatus(taskId, status)
   }
