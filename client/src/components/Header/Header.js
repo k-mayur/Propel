@@ -68,7 +68,8 @@ class Header extends React.Component {
                 style={{ color: "white", textDecoration: "none" }}
                 to={homeUrl}
               >
-                PropelMeAhead
+                ✈ PropelMeAhead ✈
+                {/* <img src={require("./logo.png")} alt="logo" /> */}
               </Link>
             </Typography>
             <div>{this.props.auth.user.name}</div>
