@@ -102,20 +102,14 @@ class CustomizedDialogDemo extends React.Component {
           <DialogContent>
             <div>
               <form action="">
-                <input type="text" name="name" />
                 Name
-                <input type="text" name="about" />
+                <input type="text" name="name" />
                 About
+                <input type="text" name="about" />
                 <input type="submit" name="submit" />
-                Submit
               </form>
             </div>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Submit
-            </Button>
-          </DialogActions>
         </Dialog>
       </div>
     );
