@@ -15,6 +15,11 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
+
+export const editUser = userData => dispatch => {
+  console.log(userData.data);
+  dispatch(setCurrentUser(userData.data));
+};
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
