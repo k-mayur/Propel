@@ -72,7 +72,7 @@ class Header extends React.Component {
                 {/* <img src={require("./logo.png")} alt="logo" /> */}
               </Link>
             </Typography>
-            <div>{this.props.auth.user.name}</div>
+            <div>{localStorage.getItem("name")}</div>
             {auth && (
               <div>
                 <IconButton
