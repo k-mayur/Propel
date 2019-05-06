@@ -12,7 +12,8 @@ const styles = {
     margin: 5
   },
   title: {
-    fontSize: 30
+    fontSize: 30,
+    color: "#007bff"
   },
   about: {
     fontSize: 25
@@ -36,6 +37,7 @@ function SimpleCard(props) {
           className={classes.title}
           color="textSecondary"
           gutterBottom
+          style={{ fontWeight: "bold" }}
         >
           Propel Team
         </Typography>
@@ -43,15 +45,9 @@ function SimpleCard(props) {
           className={classes.about}
           color="textSecondary"
           gutterBottom
+          style={{ color: "#202020" }}
         >
-          Name : {jsUcfirst(props.name)}
-        </Typography>
-        <Typography
-          className={classes.about}
-          color="textSecondary"
-          gutterBottom
-        >
-          Role : {jsUcfirst(props.userType)}
+          {jsUcfirst(props.name)}, {jsUcfirst(props.userType)}
         </Typography>
         <Typography variant="h3" component="h2" />
         <Typography
@@ -61,14 +57,19 @@ function SimpleCard(props) {
         >
           About Me:
         </Typography>
-        <Typography className={classes.text} color="textSecondary" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+        <Typography
+          className={classes.text}
+          color="textSecondary"
+          style={{ color: "#202020" }}
+          gutterBottom
+        >
+          I am a dedicated person with a family of four. I enjoy reading, and
+          the knowledge and perspective that my reading gives me has
+          strengthened my teaching skills and presentation abilities. I have
+          been successful at raising a family, and I attribute this success to
+          my ability to plan, schedule, and handle many different tasks at once.
+          This flexibility will help me in the classroom, where there are many
+          different personalities and learning styles.
         </Typography>
       </CardContent>
     </Card>

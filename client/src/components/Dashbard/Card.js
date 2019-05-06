@@ -15,7 +15,8 @@ const styles = {
   },
   media: {
     height: "30vw",
-    maxHeight: 600
+    maxHeight: 600,
+    borderRadius: "50%"
   }
 };
 
@@ -25,7 +26,7 @@ function MediaCard(props) {
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image="https://www.shareicon.net/data/512x512/2016/05/26/771204_man_512x512.png"
+        image="https://sammysouthallwebworks.co.uk/wp-content/uploads/2014/03/professional-profile-photography-worcestershire-01.jpg"
         title="User"
       />
       <CardContent>

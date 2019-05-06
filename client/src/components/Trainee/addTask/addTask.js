@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default class FormDialog extends React.Component {
     state = {
         input: '',
-        date: '2019-05-03T10:30',
+        date: '2019-05-04T10:30',
         open: false,
     };
 
@@ -27,7 +27,7 @@ export default class FormDialog extends React.Component {
     dateChange = (e) => this.setState({ date: e.target.value })
 
     handleClickOpen = () => {
-        this.setState({ open: true });
+        this.setState({ open: true});
     };
 
     handleClose = () => {

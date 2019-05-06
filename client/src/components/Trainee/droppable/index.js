@@ -28,14 +28,6 @@ class Droppable extends Component {
       taskId = draggedItemId;
       status = e.target.parentNode.parentNode.parentNode.parentNode.id;
     }
-    if (e.target.classList.contains('MuiButton-label-110')) {
-      taskId = draggedItemId;
-      status = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-    }
-    if(e.target.classList.contains('select')){
-      taskId = draggedItemId;
-      status = e.target.parentNode.parentNode.parentNode.id;
-    }
     if (status !== '') return this.props.changeStatus(taskId, status)
   }
 
