@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { editUser } from "../../store/actions/login";
+import { editUser, setCurrentUser } from "../../store/actions/login";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import IconButton from "@material-ui/core/IconButton";
@@ -80,6 +80,8 @@ class CustomizedDialogDemo extends React.Component {
 
   render() {
     const { user } = this.props.auth;
+    let name1 = localStorage.getItem("name");
+    let about1 = localStorage.getItem("about");
     return (
       <div
         style={{
@@ -136,5 +138,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { editUser }
+  { editUser, setCurrentUser }
 )(CustomizedDialogDemo);

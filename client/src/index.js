@@ -5,13 +5,14 @@ import App from "./App";
 import thunk from "redux-thunk";
 import errorReducer from "./store/reducers/errorReducers";
 import loginReducer from "./store/reducers/login";
-import traineeReducer from './store/reducers/trainee'
+import traineeReducer from "./store/reducers/trainee";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./store/actions/login";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import * as serviceWorker from "./serviceWorker";
+import Axios from "axios";
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -26,8 +27,20 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 );
 
+const getUser = () => {
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  Axios.get(`http://localhost:4000/api/userTasks/users/me`)
+    .then(res => {
+      console.log(res.user);
+      store.dispatch(setCurrentUser(res.user));
+    })
+    .catch(err => console.log(err));
+};
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
+  //getUser();
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -35,6 +48,7 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {

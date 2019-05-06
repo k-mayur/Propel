@@ -31,6 +31,26 @@ router.get(
   }
 );
 
+// get user
+router.get(
+  "/users/me",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userObj = jwt_decode(req.headers.authorization);
+
+    User.findOne({ _id: userObj.id })
+      .then(user => {
+        res.status(200).json({
+          user: user,
+          errorMsg: null
+        });
+      })
+      .catch(err => {
+        res.status(500).json({ errorMsg: err.message });
+      });
+  }
+);
+
 // get trainees
 router.get(
   "/users/trainee",

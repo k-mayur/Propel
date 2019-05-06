@@ -16,10 +16,13 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
+// edit user
 export const editUser = userData => dispatch => {
-  console.log(userData.data);
+  localStorage.setItem("name", userData.data.name);
+  localStorage.setItem("about", userData.data.about);
   dispatch(setCurrentUser(userData.data));
 };
+
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
@@ -29,10 +32,13 @@ export const loginUser = userData => dispatch => {
       // Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
+
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+      localStorage.setItem("name", decoded.name);
+      localStorage.setItem("about", decoded.about);
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
@@ -60,6 +66,8 @@ export const setUserLoading = () => {
 export const logoutUser = () => dispatch => {
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("name");
+  localStorage.removeItem("about");
   // Remove auth header for future requests
   setAuthToken(false);
 
