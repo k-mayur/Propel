@@ -50,7 +50,7 @@ function SimpleCard(props) {
           gutterBottom
           style={{ color: "#202020" }}
         >
-          {props.name}, {jsUcfirst(props.userType)}
+          {localStorage.getItem("name")}, {jsUcfirst(props.userType)}
         </Typography>
         <Typography variant="h3" component="h2" />
         <Typography
@@ -66,7 +66,7 @@ function SimpleCard(props) {
           style={{ color: "#202020" }}
           gutterBottom
         >
-          {props.about}
+          {localStorage.getItem("about")}
         </Typography>
         <Typography
           className={classes.text}
