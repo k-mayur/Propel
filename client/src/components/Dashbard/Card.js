@@ -27,10 +27,9 @@ class MediaCard extends React.Component {
   uploadImage = e => {
     e.preventDefault();
     const imagedata = document.querySelector('input[type="file"]').files[0];
-    console.log(imagedata);
+
     this.fileUpload(imagedata)
       .then(res => {
-        console.log(res);
         window.location.reload();
       })
       .catch(err => console.log(err));
@@ -39,7 +38,6 @@ class MediaCard extends React.Component {
     const url = "http://localhost:4000/api/upload";
     const formData = new FormData();
     formData.append("profileImg", file);
-    console.log(formData.file);
     const config = {
       headers: {
         "content-type": "multipart/form-data"

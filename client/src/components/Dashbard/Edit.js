@@ -1,13 +1,15 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { editUser } from "../../store/actions/login";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+import Axios from "axios";
 
 const DialogTitle = withStyles(theme => ({
   root: {
@@ -46,17 +48,24 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
-const DialogActions = withStyles(theme => ({
-  root: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    margin: 0,
-    padding: theme.spacing.unit
-  }
-}))(MuiDialogActions);
-
 class CustomizedDialogDemo extends React.Component {
   state = {
     open: false
+  };
+
+  editHandler = e => {
+    e.preventDefault();
+    const formData = new FormData(document.getElementById("editForm"));
+    const data = {
+      about: formData.get("about"),
+      name: formData.get("name")
+    };
+    Axios.put(`http://localhost:4000/api/userTasks/user/edit`, data)
+      .then(res => {
+        this.props.editUser(res);
+      })
+      .then(res => window.location.reload())
+      .catch(err => console.log(err));
   };
 
   handleClickOpen = () => {
@@ -70,6 +79,7 @@ class CustomizedDialogDemo extends React.Component {
   };
 
   render() {
+    const { user } = this.props.auth;
     return (
       <div
         style={{
@@ -84,12 +94,14 @@ class CustomizedDialogDemo extends React.Component {
             padding: "3px",
             borderRadius: "3px",
             position: "absolute",
-            right: "2px",
+            right: "-30px",
             bottom: "2px",
             cursor: "pointer"
           }}
         >
-          Edit
+          <i class="material-icons" style={{ fontSize: ".8em" }}>
+            &#xe22b;
+          </i>
         </span>
         <Dialog
           onClose={this.handleClose}
@@ -101,12 +113,12 @@ class CustomizedDialogDemo extends React.Component {
           </DialogTitle>
           <DialogContent>
             <div>
-              <form action="">
-                Name
+              <form action="" id="editForm" onSubmit={this.editHandler}>
+                Name :
                 <input type="text" name="name" />
-                About
-                <input type="text" name="about" />
-                <input type="submit" name="submit" />
+                About Me :
+                <textarea name="about" className="materialize-textarea" />
+                <input type="submit" name="submit" className="btn" />
               </form>
             </div>
           </DialogContent>
@@ -116,4 +128,13 @@ class CustomizedDialogDemo extends React.Component {
   }
 }
 
-export default CustomizedDialogDemo;
+CustomizedDialogDemo.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.login
+});
+export default connect(
+  mapStateToProps,
+  { editUser }
+)(CustomizedDialogDemo);

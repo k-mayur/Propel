@@ -50,7 +50,7 @@ function SimpleCard(props) {
           gutterBottom
           style={{ color: "#202020" }}
         >
-          {jsUcfirst(props.name)}, {jsUcfirst(props.userType)}
+          {props.name}, {jsUcfirst(props.userType)}
         </Typography>
         <Typography variant="h3" component="h2" />
         <Typography
