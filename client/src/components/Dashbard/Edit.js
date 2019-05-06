@@ -50,7 +50,13 @@ const DialogContent = withStyles(theme => ({
 
 class CustomizedDialogDemo extends React.Component {
   state = {
-    open: false
+    open: false,
+    name: localStorage.getItem("name"),
+    about: localStorage.getItem("about")
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   editHandler = e => {
@@ -63,6 +69,7 @@ class CustomizedDialogDemo extends React.Component {
     Axios.put(`http://localhost:4000/api/userTasks/user/edit`, data)
       .then(res => {
         this.props.editUser(res);
+        this.setState({ name: res.name, about: res.about });
       })
       .then(res => window.location.reload())
       .catch(err => console.log(err));
@@ -79,9 +86,6 @@ class CustomizedDialogDemo extends React.Component {
   };
 
   render() {
-    const { user } = this.props.auth;
-    let name1 = localStorage.getItem("name");
-    let about1 = localStorage.getItem("about");
     return (
       <div
         style={{
@@ -117,9 +121,19 @@ class CustomizedDialogDemo extends React.Component {
             <div>
               <form action="" id="editForm" onSubmit={this.editHandler}>
                 Name :
-                <input type="text" name="name" />
+                <input
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                />
                 About Me :
-                <textarea name="about" className="materialize-textarea" />
+                <textarea
+                  name="about"
+                  className="materialize-textarea"
+                  value={this.state.about}
+                  onChange={this.onChange}
+                />
                 <input type="submit" name="submit" className="btn" />
               </form>
             </div>
