@@ -68,7 +68,7 @@ class MediaCard extends React.Component {
 
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {this.props.name}
+            {localStorage.getItem("name")}
           </Typography>
           <Typography component="p">{this.props.userType}</Typography>
         </CardContent>
