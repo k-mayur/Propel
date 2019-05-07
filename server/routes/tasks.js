@@ -56,7 +56,7 @@ router.post(
   }
 );
 
-// edit task process
+// edit task
 router.put(
   "/edit/:id",
   passport.authenticate("jwt", { session: false }),

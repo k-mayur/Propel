@@ -68,7 +68,8 @@ class Header extends React.Component {
                 style={{ color: "white", textDecoration: "none" }}
                 to={homeUrl}
               >
-                PropelMeAhead
+                ✈ PropelMeAhead ✈
+                {/* <img src={require("./logo.png")} alt="logo" /> */}
               </Link>
             </Typography>
             <div>{this.props.auth.user.name}</div>
@@ -105,8 +106,6 @@ class Header extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   </Link>{" "}
-                  <MenuItem onClick={this.handleClose}>Notifications</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Activities</MenuItem>
                   <MenuItem onClick={this.onLogoutClick}>Log out</MenuItem>
                 </Menu>
               </div>

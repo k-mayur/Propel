@@ -7,31 +7,30 @@ import AddTask from "./addTaskForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
-import FullScreenDialog from './traineeTasks'
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import { withStyles } from '@material-ui/core/styles';
-
+import FullScreenDialog from "./traineeTasks";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   container: {
-    margin:'5em'
+    margin: "5em"
   },
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
   button: {
-    display: 'block',
-    marginTop: theme.spacing.unit * 2,
+    display: "block",
+    marginTop: theme.spacing.unit * 2
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120,
-  },
-})
+    minWidth: 120
+  }
+});
 
 class Todos extends Component {
   state = {
@@ -41,7 +40,7 @@ class Todos extends Component {
     taskId: "",
     traineeId: [],
     status: [],
-    traineeData: [],
+    traineeData: []
   };
 
   componentDidMount = () => {
@@ -63,12 +62,11 @@ class Todos extends Component {
           });
         });
 
-
         const trainee = res.data.users.map(user => {
           return {
             name: user.name,
             task: user.tasks.map(task => task.task),
-            status: user.tasks.map(task => task.status),
+            status: user.tasks.map(task => task.status)
           };
         });
         this.setState({ traineeData: [...trainee] });
@@ -104,12 +102,13 @@ class Todos extends Component {
   };
 
   assignTask = () => {
-    if (this.state.taskId === '' || this.state.trainees.length === 0) return alert("Select Task and trainees")
+    if (this.state.taskId === "" || this.state.trainees.length === 0)
+      return alert("Select Task and trainees");
     this.state.trainees.forEach(trainee => {
       axios
         .put("http://localhost:4000/api/userTasks/task/assign", {
           taskId: this.state.taskId,
-          traineeId: trainee,
+          traineeId: trainee
         })
         .then(res => {
           alert("task assigned");
@@ -129,8 +128,6 @@ class Todos extends Component {
     });
   };
 
-
-
   render() {
     const { classes } = this.props;
     const todos = this.state.todos;
@@ -142,7 +139,7 @@ class Todos extends Component {
             style={{
               margin: "20px",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "space-between"
             }}
             key={todo.id}
           >
@@ -174,8 +171,8 @@ class Todos extends Component {
         );
       })
     ) : (
-        <p>No tasks yet</p>
-      );
+      <p>No tasks yet</p>
+    );
 
     return (
       <div className={classes.container}>
@@ -184,9 +181,9 @@ class Todos extends Component {
           style={{ width: "100%" }}
         >
           <div class="black-text">
-            <h3 >Create Task</h3>
+            <h3>Create Task</h3>
             <AddTask addTodo={this.addTodo} />
-            <h6 >List of Tasks</h6>
+            <h6>List of Tasks</h6>
             <span>{todoList}</span>
           </div>
         </div>
@@ -199,18 +196,19 @@ class Todos extends Component {
           </h6>
           <form className="select" autoComplete="off">
             <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="demo-controlled-open-select">Trainees</InputLabel>
+              <InputLabel htmlFor="demo-controlled-open-select">
+                Trainees
+              </InputLabel>
               <Select
-
                 multiple
                 className="col s6"
                 value={this.state.trainees}
                 onChange={this.handleChange}
                 input={<Input id="select-multiple" />}
                 placeholder="choose trainee"
-                style={{ width: '300px' }}
+                style={{ width: "300px" }}
                 inputProps={{
-                  id: 'demo-controlled-open-select',
+                  id: "demo-controlled-open-select"
                 }}
               >
                 {this.state.options.map(option => {
@@ -221,13 +219,16 @@ class Todos extends Component {
             <a
               className="waves-effect waves-light btn-small col s6"
               onClick={this.assignTask}
-              style={{ marginLeft: "2rem", float: 'right', color: 'white' }}
+              style={{ marginLeft: "2rem", float: "right", color: "white" }}
             >
               Assign
-          </a>
+            </a>
           </form>
         </div>
-        <div className="card white-grey card-panel hoverable" style={{ width: "100%" }}>
+        <div
+          className="card white-grey card-panel hoverable"
+          style={{ width: "100%" }}
+        >
           <h6 className="card-title" style={{ marginBottom: "40px" }}>
             Check progress of Trainee
           </h6>

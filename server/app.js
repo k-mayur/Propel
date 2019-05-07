@@ -3,15 +3,46 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const busboy = require("connect-busboy");
-const busboyBodyParser = require("busboy-body-parser");
 const app = express();
+const path = require("path");
+const multer = require("multer");
+const jwt_decode = require("jwt-decode");
+
+const storage = multer.diskStorage({
+  destination: "../public/uploads/",
+  filename: function(req, file, cb) {
+    const userObj = jwt_decode(req.headers.authorization);
+    cb(null, file.fieldname + "-" + userObj.id + `.jpeg`);
+  }
+});
+
+// init upload
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1000000
+  },
+  fileFilter: (req, file, cb) => {
+    checkFileType(file, cb);
+  }
+}).single("profileImg");
+
+const checkFileType = (file, cb) => {
+  const filetypes = /jpeg|jpg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb({ message: "images only" });
+  }
+};
 
 // load routes
 const users = require("./routes/users");
 const tasks = require("./routes/tasks");
 const userTasks = require("./routes/userTasks");
-const upload = require("./routes/upload");
 
 // passport config
 require("./config/passport")(passport);
@@ -29,13 +60,16 @@ mongoose
 
 //cors middleware
 app.use(cors());
-app.use(busboy());
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 // body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// file upload middleware
-app.use(busboyBodyParser());
+app.use(express.static("../public"));
 
 // passport middleware must be put after express session middleware
 app.use(passport.initialize());
@@ -54,7 +88,23 @@ app.use((req, res, next) => {
 app.use("/api/users", users);
 app.use("/api/tasks", tasks);
 app.use("/api/userTasks", userTasks);
-app.use("/api/upload", upload);
+
+app.post("/api/upload", function(req, res) {
+  upload(req, res, err => {
+    console.log(req.file, "here");
+    if (req.file == undefined) {
+      res.status(404).json({ errorMsg: "no file selected" });
+    } else {
+      if (err) {
+        res.status(402).json({ errorMsg: err.message });
+      } else {
+        res
+          .status(200)
+          .json({ msg: "uploaded img", file: `uploads/${req.file.filename}` });
+      }
+    }
+  });
+});
 
 const port = 4000;
 app.listen(port, () => {
