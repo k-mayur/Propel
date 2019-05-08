@@ -1,0 +1,20 @@
+version: "3"
+services:
+  client:
+    container_name: client
+    restart: always
+    build: ./client/
+    ports:
+      - "3000:3000"
+  server:
+    container_name: server
+    restart: always
+    build: ./server/
+    ports:
+      - "4000:4000"
+  public:
+    container_name: public
+    restart: always
+    build: ./public/
+    ports:
+      - "5500:8080"
