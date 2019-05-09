@@ -1,12 +1,24 @@
-es:
-  image: elasticsearch:2.3
-  cpu_shares: 100
-  mem_limit: 262144000
-web:
-  image: prakhar1989/foodtrucks-web
+client:
+  container_name: client
+  restart: always
+  image: kmayur35/propel:client
   cpu_shares: 100
   mem_limit: 262144000
   ports:
-    - "80:5000"
-  links:
-    - es
+    - "3000:3000"
+server:
+  container_name: server
+  restart: always
+  image: kmayur35/propel:server
+  cpu_shares: 100
+  mem_limit: 262144000
+  ports:
+    - "4000:4000"
+public:
+  container_name: public
+  restart: always
+  image: kmayur35/propel:public
+  cpu_shares: 100
+  mem_limit: 262144000
+  ports:
+    - "5500:8080"
