@@ -1,7 +1,14 @@
 .wrap {
   display: flex;
-  height: 100vw;
+  min-height: 100vh;
   flex-direction: column;
   justify-content: space-between;
-  align-content: space-between;
+}
+.wrap1 {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-content: space-between; */
+  background-image: linear-gradient(to top, darkgray, white);
 }

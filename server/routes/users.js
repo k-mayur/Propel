@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+// const fs = require('fs-extra');
+// const multer = require('multer');
+// const util = require('util');
 
 const keys = require("../config/keys").secretKey;
 
@@ -33,15 +36,19 @@ router.post("/login", (req, res, next) => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
+        // console.log(user);
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          userType: user.userType,
+          about: user.about,
+          createDate: user.createDate
         };
         jwt.sign(
           payload,
           keys,
           {
-            expiresIn: 31556926 // 1 year in seconds
+            expiresIn: 1200 // 20 minutes in seconds
           },
           (err, token) => {
             res.json({

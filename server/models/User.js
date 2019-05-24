@@ -26,6 +26,14 @@ const UserSchema = new Schema({
   updateDate: {
     type: Date,
     default: Date.now
+  },
+  tasks: {
+    type: Array,
+    default: []
+  },
+  about: {
+    type: String,
+    default: "I'm a User."
   }
 });
 

@@ -15,7 +15,7 @@ module.exports = function validateRegisterInput(data) {
     data.userType.toLowerCase() !== "mentor" &&
     data.userType.toLowerCase() !== "trainee"
   ) {
-    errors.name = "Please enter valid userType";
+    errors.userType = "Please enter valid userType";
   }
   // Name checks
   if (Validator.isEmpty(data.name)) {

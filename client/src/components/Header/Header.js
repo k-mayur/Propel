@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -50,7 +51,12 @@ class Header extends React.Component {
     const open = Boolean(anchorEl);
     let homeUrl = "/";
     if (auth) {
-      homeUrl = "/dashboard";
+      if (this.props.auth.user.userType === "MENTOR") {
+        homeUrl = "/mentor";
+      }
+      if (this.props.auth.user.userType === "TRAINEE") {
+        homeUrl = "/trainee";
+      }
     }
 
     return (
@@ -58,13 +64,15 @@ class Header extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              <a
+              <Link
                 style={{ color: "white", textDecoration: "none" }}
-                href={homeUrl}
+                to={homeUrl}
               >
-                PropelMeAhead
-              </a>
+                ✈ PropelMeAhead ✈
+                {/* <img src={require("./logo.png")} alt="logo" /> */}
+              </Link>
             </Typography>
+            <div>{localStorage.getItem("name")}</div>
             {auth && (
               <div>
                 <IconButton
@@ -89,9 +97,15 @@ class Header extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Notifications</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Activities</MenuItem>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "#202020"
+                    }}
+                    to="/dashboard"
+                  >
+                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                  </Link>{" "}
                   <MenuItem onClick={this.onLogoutClick}>Log out</MenuItem>
                 </Menu>
               </div>

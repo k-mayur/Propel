@@ -1,6 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-class Login extends React.Component {
+class Home extends React.Component {
+  componentDidMount() {
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push(`/dashboard`);
+    }
+  }
   render() {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
@@ -13,11 +22,11 @@ class Login extends React.Component {
               &nbsp; today!
             </h4>
             <p className="flow-text grey-text text-darken-1">
-              A MountBlue Technology Career Booster Program
+              A MountBlue Technologies Career Booster Program
             </p>
             <br />
-            <a
-              href="/register"
+            <Link
+              to="/register"
               style={{
                 width: "150px",
                 borderRadius: "3px",
@@ -26,9 +35,9 @@ class Login extends React.Component {
               className="btn btn-large waves-effect waves-light hoverable blue accent-3"
             >
               Register
-            </a>
-            <a
-              href="/login"
+            </Link>
+            <Link
+              to="/login"
               style={{
                 marginLeft: "2rem",
                 width: "150px",
@@ -38,22 +47,18 @@ class Login extends React.Component {
               className="btn btn-large waves-effect white hoverable black-text"
             >
               Log In
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     );
   }
-
-  // render() {
-  //   return (
-  //     <div>
-  //       {this.state.data.name}
-  //       <Link to="/login">login</Link>
-  //       <Link to="/register">register</Link>
-  //     </div>
-  //   );
-  // }
 }
 
-export default Login;
+Home.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.login
+});
+export default connect(mapStateToProps)(Home);
